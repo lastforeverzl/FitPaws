@@ -1,8 +1,8 @@
 import { TabNavigator, StackNavigator } from 'react-navigation';
-import Profile from '../containers/Profile';
-import History from '../containers/History';
-import Record from '../containers/Record';
-import Track from '../containers/Track';
+import Profile from '../components/Profile';
+import History from '../components/History';
+import Record from '../components/Record';
+import Track from '../components/Track';
 
 export const Tabs = TabNavigator({
   History: { screen: History },
