@@ -2,3 +2,6 @@ export const START_TIMER = 'START_TIMER';
 export const STOP_TIMER = 'STOP_TIMER';
 export const RESET_TIMER = 'RESET_TIMER';
 export const TICK = 'TICK';
+export const UPDATE_LOCATION = 'UPDATE_LOCATION';
+export const PAUSE_UPDATE_LOCATION = 'PAUSE_UPDATE_LOCATION';
+export const RESET_LOCATION = 'RESET_LOCATION';

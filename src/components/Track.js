@@ -1,20 +1,23 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 import MyStatusBar from '../components/MyStatusBar';
 import Timer from '../containers/Timer';
-import TimerController from '../containers/TimerController';
+import Controller from '../containers/Controller';
+import Map from '../containers/Map';
+import Distance from '../containers/Distance';
 
 const Track = () => (
   <View style={styles.container}>
     <MyStatusBar />
     <View style={styles.recordView}>
       <Timer />
+      <Distance />
     </View>
     <View style={styles.mapView}>
-      <Text>MapView</Text>
+      <Map />
     </View>
-    <TimerController />
+    <Controller />
   </View>
 );
 
@@ -27,12 +30,14 @@ const styles = StyleSheet.create({
     height: 100,
     backgroundColor: '#ffffff',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
     alignItems: 'center',
   },
   mapView: {
     flex: 1,
-    backgroundColor: '#E0CA3C',
+    backgroundColor: '#ffffff',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

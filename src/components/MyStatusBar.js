@@ -1,5 +1,12 @@
 import React from 'react';
-import { StatusBar, View, Platform } from 'react-native';
+import { StatusBar, View, Platform, Dimensions } from 'react-native';
+
+const isIos = Platform.OS === 'ios';
+const isIphoneX = isIos && Dimensions.get('window').height === 812;
+let STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
+if (isIos && isIphoneX) {
+  STATUSBAR_HEIGHT = 44;
+}
 
 const MyStatusBar = () => {
   return (
@@ -10,8 +17,6 @@ const MyStatusBar = () => {
     </View>
   );
 };
-
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : StatusBar.currentHeight;
 
 const styles = {
   container: {

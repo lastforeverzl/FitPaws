@@ -15,7 +15,7 @@ class Timer extends React.Component {
     };
 
     const t = new Date(propsTime);
-    const min = pad(t.getMinutes().toString(), 1);
+    const min = pad(t.getMinutes().toString(), 2);
     const sec = pad(t.getSeconds().toString(), 2);
     return `${min}:${sec}`;
   }
@@ -26,7 +26,7 @@ class Timer extends React.Component {
         <Text style={[styles.counter, { fontFamily }]}>
           {this.format(this.props.time)}
         </Text>
-        <Text style={styles.minText}>Time</Text>
+        <Text style={styles.text}>Time</Text>
       </View>
     );
   }
@@ -41,7 +41,7 @@ const styles = {
     textAlign: 'center',
     letterSpacing: 2,
   },
-  minText: {
+  text: {
     color: '#34495E',
     fontSize: 13,
     fontWeight: 'normal',
