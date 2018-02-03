@@ -6,6 +6,8 @@ import Timer from '../containers/Timer';
 import Controller from '../containers/Controller';
 import Map from '../containers/Map';
 import Distance from '../containers/Distance';
+import SlidingPanel from '../containers/SlidingPanel';
+import BottomDrawer from '../containers/BottomDrawer';
 
 const Track = () => (
   <View style={styles.container}>
@@ -18,6 +20,8 @@ const Track = () => (
       <Map />
     </View>
     <Controller />
+    {/* <SlidingPanel /> */}
+    <BottomDrawer />
   </View>
 );
 

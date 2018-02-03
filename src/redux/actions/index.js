@@ -8,6 +8,13 @@ import {
   UPDATE_LOCATION,
   PAUSE_UPDATE_LOCATION,
   RESET_LOCATION,
+  SHOW_SLIDING_PANEL,
+  HIDE_SLIDING_PANEL,
+  CHOOSE_FEEL_SCALE,
+  CHOOSE_POOP_SHAPE,
+  CHOOSE_POOP_COLOR,
+  CHOOSE_PEE,
+  CHOOSE_POOP,
 } from '../constants';
 
 export function startTimer() {
@@ -62,5 +69,33 @@ export function pauseUpdateLocation() {
 export function resetLocation() {
   return {
     type: RESET_LOCATION,
+  };
+}
+
+export function showSlidingPanel() {
+  return {
+    type: SHOW_SLIDING_PANEL,
+    panelVisible: true,
+  };
+}
+
+export function hideSlidingPanel() {
+  return {
+    type: HIDE_SLIDING_PANEL,
+    panelVisible: false,
+  };
+}
+
+export function updateFeelScale(scale) {
+  return {
+    type: CHOOSE_FEEL_SCALE,
+    feelScale: scale,
+  };
+}
+
+export function checkIfPoop(poop) {
+  return {
+    type: CHOOSE_POOP,
+    poop,
   };
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Icon } from 'react-native-elements';
@@ -29,8 +29,8 @@ class Controller extends React.Component {
     this.startWatch();
   }
 
-  handleStopPress = () => {
-
+  handleStopPress = (actions) => {
+    actions.showSlidingPanel();
   }
 
   startWatch = () => {
@@ -82,7 +82,7 @@ class Controller extends React.Component {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.stopButton}
-              onPress={() => this.handleStopPress()}
+              onPress={() => this.handleStopPress(actions)}
               activeOpacity={0.8}
             >
               <Icon
@@ -143,6 +143,7 @@ function mapStateToProps(state) {
     interval: state.timer.interval,
     prevLatLng: state.location.prevLatLng,
     distanceTravelled: state.location.distanceTravelled,
+    panelVisible: state.slidingPanel.panelVisible,
   };
 }
 

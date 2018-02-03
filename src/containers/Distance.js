@@ -1,23 +1,21 @@
 import React from 'react';
-import { View, Text, Platform } from 'react-native';
+import { View, Text, Platform, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import * as MapActions from '../redux/actions';
+import * as Actions from '../redux/actions';
 
-const Distance = (props) => {
-  return (
-    <View>
-      <Text style={[styles.distance, { fontFamily }]}>
-        {parseFloat(props.distanceTravelled).toFixed(2)}
-      </Text>
-      <Text style={styles.text}>Distance(mile)</Text>
-    </View>
-  );
-};
+const Distance = ({ distanceTravelled }) => (
+  <View>
+    <Text style={[styles.distance, { fontFamily }]}>
+      {parseFloat(distanceTravelled).toFixed(2)}
+    </Text>
+    <Text style={styles.text}>Distance(mile)</Text>
+  </View>
+);
 
 const fontFamily = Platform.OS === 'ios' ? 'HelveticaNeue-Medium' : 'monospace';
 
-const styles = {
+const styles = StyleSheet.create({
   distance: {
     color: '#34495E',
     fontSize: 40,
@@ -30,7 +28,7 @@ const styles = {
     fontWeight: 'normal',
     textAlign: 'center',
   },
-};
+});
 
 function mapStateToProps(state) {
   return {
@@ -40,7 +38,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(MapActions, dispatch),
+    actions: bindActionCreators(Actions, dispatch),
   };
 }
 

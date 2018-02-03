@@ -49,7 +49,6 @@ const styles = {
   },
 };
 
-
 function mapStateToProps(state) {
   return {
     time: state.timer.time,

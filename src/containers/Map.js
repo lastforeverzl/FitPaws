@@ -17,8 +17,8 @@ class Map extends React.Component {
       currentPosition: {
         latitude: 0,
         longitude: 0,
-      }
-    }
+      },
+    };
   }
 
   componentDidMount() {
