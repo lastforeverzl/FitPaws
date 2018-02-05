@@ -39,7 +39,7 @@ export default function record(state = initialState, action) {
     case CHOOSE_PEE:
       return {
         ...state,
-        pee: true,
+        pee: action.pee,
       };
     default:
       return state;

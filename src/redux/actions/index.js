@@ -93,7 +93,7 @@ export function updateFeelScale(scale) {
   };
 }
 
-export function checkIfPoop(poop) {
+export function updatePoopStatus(poop) {
   return {
     type: CHOOSE_POOP,
     poop,
@@ -111,5 +111,12 @@ export function updatePoopColor(poopColor) {
   return {
     type: CHOOSE_POOP_COLOR,
     poopColor,
+  };
+}
+
+export function updatePeeStatus(pee) {
+  return {
+    type: CHOOSE_PEE,
+    pee,
   };
 }

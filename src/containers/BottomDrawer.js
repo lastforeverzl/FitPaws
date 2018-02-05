@@ -13,34 +13,33 @@ import CustomIcon from '../config/CustomIcon';
 import GradientDivider from '../components/GradientDivider';
 import PoopShape from './PoopShape';
 import PoopColor from './PoopColor';
+import ToggleButton from './ToggleButton';
+import TextField from './TextField';
 
 const Screen = {
   width: Dimensions.get('window').width,
   height: Dimensions.get('window').height - 75,
 };
-const buttonDefault = '#ECF0F1';
-const buttonTextDefault = '#34495E';
-const buttonClicked = '#34495E';
-const buttonTextClicked = '#FFFFFF';
 const fontFamily = Platform.OS === 'ios' ? 'HelveticaNeue' : 'monospace';
 
 class BottomDrawer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      yesButtonColor: buttonDefault,
-      noButtonColor: buttonDefault,
-      yesTextColor: buttonTextDefault,
-      noTextColor: buttonTextDefault,
       isCollapsed: true,
       snapPoints: [
+        { y: -720 },
+        { y: -500 },
+        { y: -400 },
         { y: -250 },
         { y: -50 },
         { y: 40 },
         { y: Screen.height - 300 },
         { y: Screen.height - 100 },
       ],
+      text: '',
     };
+    this._interactable = this._interactable.bind(this);
   }
 
   _getCurrentTime = () => {
@@ -51,35 +50,47 @@ class BottomDrawer extends React.Component {
     return `${date.toLocaleString([], options)}`;
   }
 
-  _poopOnClick = (poopStatus) => {
+  _interactable(ref) {
+    this._interactable_ref = ref;
+  }
+
+  _inputOnFocus = () => {
+    console.log('BottomDrawer _inputOnFocus');
+    // this._interactable_ref.snapTo({ index: 0 });
+    const moveToY = this.state.isCollapsed ? -400 : -720;
+    this._interactable_ref.changePosition({ y: moveToY });
+  }
+
+  _poopOnClick = (status) => {
     const { actions } = this.props;
-    actions.checkIfPoop(poopStatus);
-    if (poopStatus) {
+    actions.updatePoopStatus(status);
+    if (status) {
       this.setState({
         isCollapsed: false,
-        yesButtonColor: buttonClicked,
-        yesTextColor: buttonTextClicked,
-        noButtonColor: buttonDefault,
-        noTextColor: buttonTextDefault,
       });
     } else {
-      actions.updatePoopShape(0);
-      actions.updatePoopColor(0);
       this.setState({
         isCollapsed: true,
-        noButtonColor: buttonClicked,
-        noTextColor: buttonTextClicked,
-        yesButtonColor: buttonDefault,
-        yesTextColor: buttonTextDefault,
       });
+      actions.updatePoopShape(0);
+      actions.updatePoopColor(0);
     }
+  }
+
+  _peeOnClick = (status: boolean) => {
+    const { actions } = this.props;
+    actions.updatePeeStatus(status);
+  }
+
+  _textOnChange = (text: string) => {
+    this.setState({ text });
   }
 
   renderView() {
     const {
-      visible, distanceTravelled, time, poop, actions, 
+      visible, distanceTravelled, time, poop, pee, actions, 
     } = this.props;
-    console.log(`click collapse ${poop}`);
+    console.log(`click collapse, poop: ${poop}, pee: ${pee}`);
     if (visible) {
       return (
         <View style={styles.panelContainer}>
@@ -91,6 +102,7 @@ class BottomDrawer extends React.Component {
             }]}
           />
           <Interactable.View
+            ref={this._interactable}
             verticalOnly
             snapPoints={this.state.snapPoints}
             boundaries={{ top: -800 }}
@@ -122,26 +134,7 @@ class BottomDrawer extends React.Component {
                 <Text style={[styles.text, styles.panelTitleText]} >Poop</Text>
               </View>
               <TextDivider text="Did Kipper poop?" />
-              <View style={styles.buttonGroup}>
-                <Button
-                  backgroundColor={this.state.yesButtonColor}
-                  color={this.state.yesTextColor}
-                  buttonStyle={styles.button}
-                  textStyle={styles.buttonText}
-                  onPress={() => this._poopOnClick(true)}
-                  rounded
-                  title="YES"
-                />
-                <Button
-                  backgroundColor={this.state.noButtonColor}
-                  color={this.state.noTextColor}
-                  buttonStyle={styles.button}
-                  textStyle={styles.buttonText}
-                  onPress={() => this._poopOnClick(false)}
-                  rounded
-                  title="NO"
-                />
-              </View>
+              <ToggleButton onPressButton={this._poopOnClick} />
               <Collapsible collapsed={this.state.isCollapsed}>
                 <TextDivider text="What was the shape like?" />
                 <GradientDivider startText="Hard" endText="Soft" startColor="#2C8C2D" endColor="#79C27B" />
@@ -156,8 +149,27 @@ class BottomDrawer extends React.Component {
                 <CustomIcon name="peeIcon" size={24} color="#34495E" />
                 <Text style={[styles.text, styles.panelTitleText]} >Pee</Text>
               </View>
+              <TextDivider text="Did Kipper pee?" />
+              <ToggleButton onPressButton={this._peeOnClick} />
             </View>
-
+            <View style={styles.panel}>
+              <View style={styles.panelTitle}>
+                <CustomIcon name="note" size={24} color="#34495E" />
+                <Text style={[styles.text, styles.panelTitleText]} >Notes</Text>
+              </View>
+              <TextField inputOnFocus={this._inputOnFocus} text={this._textOnChange} value={this.state.text} />
+            </View>
+            <View style={styles.saveButtonView}>
+              <Button
+                buttonStyle={styles.button}
+                fontWeight="bold"
+                fontSize={14}
+                large
+                raised
+                rounded
+                title="SAVE"
+              />
+            </View>
           </Interactable.View>
         </View>
       );
@@ -172,20 +184,12 @@ class BottomDrawer extends React.Component {
 
 const styles = StyleSheet.create({
   button: {
-    height: 36,
-    width: 113,
+    backgroundColor: '#06D6A0',
   },
-  buttonText: {
-    fontFamily,
-    fontSize: 12,
-    fontWeight: '500',
-    textAlign: 'center',
-  },
-  buttonGroup: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 10,
-    marginBottom: 10,
+  saveButtonView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'stretch',
   },
   panelContainer: {
     position: 'absolute',
@@ -255,6 +259,7 @@ function mapStateToProps(state) {
     distanceTravelled: state.location.distanceTravelled,
     time: state.timer.time,
     poop: state.record.poop,
+    pee: state.record.pee,
   };
 }
 
