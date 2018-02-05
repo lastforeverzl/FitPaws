@@ -2,12 +2,11 @@ import React from 'react';
 import { Platform, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Actions from '../redux/actions';
 
 const fontFamily = Platform.OS === 'ios' ? 'HelveticaNeue' : 'monospace';
 
-class SingleColor extends React.PureComponent {
+class SingleColor extends React.Component {
   _onPress = () => {
     const { id, actions } = this.props;
     this.props.onPressItem(id);

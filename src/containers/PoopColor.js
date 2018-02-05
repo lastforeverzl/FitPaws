@@ -30,12 +30,20 @@ const list = [
   },
 ];
 
-class PoopColor extends React.PureComponent {
+class PoopColor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selected: (new Map(): Map<number, boolean>),
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.collapse === true) {
+      this.setState({
+        selected: (new Map(): Map<number, boolean>),
+      });
+    }
   }
 
   _onPressItem = (id: number) => {
@@ -46,7 +54,7 @@ class PoopColor extends React.PureComponent {
     });
   }
 
-  renderItem = ({ item }) => (
+  _renderItem = ({ item }) => (
     <SingleColor
       id={item.id}
       color={item.color}
@@ -62,9 +70,9 @@ class PoopColor extends React.PureComponent {
         <FlatList
           data={list}
           horizontal
-          extraData={this.state.selected}
-          keyExtractor={(item, index) => item.id}
-          renderItem={this.renderItem}
+          extraData={this.state}
+          keyExtractor={item => item.id}
+          renderItem={this._renderItem}
           showsHorizontalScrollIndicator={false}
           removeClippedSubviews={false}
         />
@@ -75,6 +83,7 @@ class PoopColor extends React.PureComponent {
 
 const styles = StyleSheet.create({
   container: {
+    height: 72,
     marginTop: 10,
     marginBottom: 10,
   },

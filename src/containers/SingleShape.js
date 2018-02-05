@@ -7,7 +7,7 @@ import * as Actions from '../redux/actions';
 
 const fontFamily = Platform.OS === 'ios' ? 'HelveticaNeue' : 'monospace';
 
-class SingleShape extends React.PureComponent {
+class SingleShape extends React.Component {
   _onPress = () => {
     const { id, actions } = this.props;
     this.props.onPressItem(id);

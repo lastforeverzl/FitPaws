@@ -43,7 +43,7 @@ class BottomDrawer extends React.Component {
     };
   }
 
-  getCurrentTime = () => {
+  _getCurrentTime = () => {
     const date = new Date();
     const options = {
       year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit',
@@ -51,7 +51,7 @@ class BottomDrawer extends React.Component {
     return `${date.toLocaleString([], options)}`;
   }
 
-  poopOnClick = (poopStatus) => {
+  _poopOnClick = (poopStatus) => {
     const { actions } = this.props;
     actions.checkIfPoop(poopStatus);
     if (poopStatus) {
@@ -63,6 +63,8 @@ class BottomDrawer extends React.Component {
         noTextColor: buttonTextDefault,
       });
     } else {
+      actions.updatePoopShape(0);
+      actions.updatePoopColor(0);
       this.setState({
         isCollapsed: true,
         noButtonColor: buttonClicked,
@@ -107,7 +109,7 @@ class BottomDrawer extends React.Component {
                 <View style={styles.panelHandle} />
               </View>
               <View style={[{ marginTop: 20 }, { marginBottom: 10 }]}>
-                <Text style={styles.text}>{this.getCurrentTime()}</Text>
+                <Text style={styles.text}>{this._getCurrentTime()}</Text>
               </View>
               <TextDivider text="Today's walk" />
               <TimeDistance time={time} distance={distanceTravelled} />
@@ -126,7 +128,7 @@ class BottomDrawer extends React.Component {
                   color={this.state.yesTextColor}
                   buttonStyle={styles.button}
                   textStyle={styles.buttonText}
-                  onPress={() => this.poopOnClick(true)}
+                  onPress={() => this._poopOnClick(true)}
                   rounded
                   title="YES"
                 />
@@ -135,7 +137,7 @@ class BottomDrawer extends React.Component {
                   color={this.state.noTextColor}
                   buttonStyle={styles.button}
                   textStyle={styles.buttonText}
-                  onPress={() => this.poopOnClick(false)}
+                  onPress={() => this._poopOnClick(false)}
                   rounded
                   title="NO"
                 />
@@ -143,31 +145,17 @@ class BottomDrawer extends React.Component {
               <Collapsible collapsed={this.state.isCollapsed}>
                 <TextDivider text="What was the shape like?" />
                 <GradientDivider startText="Hard" endText="Soft" startColor="#2C8C2D" endColor="#79C27B" />
-                <PoopShape />
+                <PoopShape collapse={this.state.isCollapsed} />
                 <TextDivider text="What was the color like?" />
                 <GradientDivider startText="Healthy" endText="Problematic" startColor="#2C8C2D" endColor="#E74C3C" />
-                <PoopColor />
+                <PoopColor collapse={this.state.isCollapsed} />
               </Collapsible>
-
-
-              {/* <View flexDirection='row'>
-                <CustomIcon name="poopIcon" size={34} color="#34495E" />
-                <CustomIcon name="peeIcon" size={34} color="#34495E" />
-                <CustomIcon name="note" size={34} color="#34495E" />
-                <CustomIcon name="pin" size={34} color="#34495E" />
+            </View>
+            <View style={styles.panel}>
+              <View style={styles.panelTitle}>
+                <CustomIcon name="peeIcon" size={24} color="#34495E" />
+                <Text style={[styles.text, styles.panelTitleText]} >Pee</Text>
               </View>
-              <View flexDirection='row'>
-                <CustomIcon name="poop-1" size={34} color="#34495E"/>
-                <CustomIcon name="poop-2" size={34} />
-                <CustomIcon name="poop-3" size={34} />
-                <CustomIcon name="poop-4" size={34} />
-                <CustomIcon name="poop-5" size={34} />
-                <CustomIcon name="poop-6" size={34} />
-                <CustomIcon name="poop-7" size={34} />
-                <CustomIcon name="pee-1" size={34} />
-                <CustomIcon name="pee-2" size={34} />
-                <CustomIcon name="pee-3" size={34} />
-              </View> */}
             </View>
 
           </Interactable.View>
