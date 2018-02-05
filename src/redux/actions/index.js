@@ -99,3 +99,17 @@ export function checkIfPoop(poop) {
     poop,
   };
 }
+
+export function updatePoopShape(poopShape) {
+  return {
+    type: CHOOSE_POOP_SHAPE,
+    poopShape,
+  };
+}
+
+export function updatePoopColor(poopColor) {
+  return {
+    type: CHOOSE_POOP_COLOR,
+    poopColor,
+  };
+}

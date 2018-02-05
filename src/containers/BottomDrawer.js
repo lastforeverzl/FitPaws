@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Dimensions, Animated, Platform, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, Dimensions, Animated, Platform } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Icon, Button } from 'react-native-elements';
@@ -11,6 +11,8 @@ import TimeDistance from '../components/TimeDistance';
 import FeelScale from './FeelScale';
 import CustomIcon from '../config/CustomIcon';
 import GradientDivider from '../components/GradientDivider';
+import PoopShape from './PoopShape';
+import PoopColor from './PoopColor';
 
 const Screen = {
   width: Dimensions.get('window').width,
@@ -32,6 +34,7 @@ class BottomDrawer extends React.Component {
       noTextColor: buttonTextDefault,
       isCollapsed: true,
       snapPoints: [
+        { y: -250 },
         { y: -50 },
         { y: 40 },
         { y: Screen.height - 300 },
@@ -140,8 +143,10 @@ class BottomDrawer extends React.Component {
               <Collapsible collapsed={this.state.isCollapsed}>
                 <TextDivider text="What was the shape like?" />
                 <GradientDivider startText="Hard" endText="Soft" startColor="#2C8C2D" endColor="#79C27B" />
+                <PoopShape />
                 <TextDivider text="What was the color like?" />
                 <GradientDivider startText="Healthy" endText="Problematic" startColor="#2C8C2D" endColor="#E74C3C" />
+                <PoopColor />
               </Collapsible>
 
 
@@ -163,7 +168,6 @@ class BottomDrawer extends React.Component {
                 <CustomIcon name="pee-2" size={34} />
                 <CustomIcon name="pee-3" size={34} />
               </View> */}
-              
             </View>
 
           </Interactable.View>
