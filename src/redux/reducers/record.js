@@ -4,6 +4,7 @@ import {
   CHOOSE_POOP_COLOR,
   CHOOSE_PEE,
   CHOOSE_POOP,
+  RESET_RECORD,
 } from '../constants';
 
 const initialState = {
@@ -41,6 +42,8 @@ export default function record(state = initialState, action) {
         ...state,
         pee: action.pee,
       };
+    case RESET_RECORD:
+      return initialState;
     default:
       return state;
   }

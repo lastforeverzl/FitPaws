@@ -93,6 +93,17 @@ class BottomDrawer extends React.Component {
     console.log(`time: ${time}, distance: ${distanceTravelled}, feel: ${feelScale}`);
     console.log(`poop: ${poop}, pee: ${pee}, color: ${poopColor}, shape: ${poopShape}`);
     console.log(`note: ${this.state.note}`);
+
+    this._resetTrackRecord();
+    this.props.closePanel();
+  }
+
+  _resetTrackRecord = () => {
+    const { actions } = this.props;
+    actions.resetTimer();
+    actions.resetLocation();
+    actions.resetRecord();
+    actions.hideSlidingPanel();
   }
 
   _textOnChange = (note: string) => {
@@ -101,7 +112,7 @@ class BottomDrawer extends React.Component {
 
   renderView() {
     const {
-      visible, distanceTravelled, time, poop, pee, actions, 
+      visible, distanceTravelled, time, poop, pee,
     } = this.props;
     console.log(`click collapse, poop: ${poop}, pee: ${pee}`);
     if (visible) {

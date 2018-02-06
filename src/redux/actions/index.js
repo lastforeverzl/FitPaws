@@ -15,6 +15,7 @@ import {
   CHOOSE_POOP_COLOR,
   CHOOSE_PEE,
   CHOOSE_POOP,
+  RESET_RECORD,
 } from '../constants';
 
 export function startTimer() {
@@ -41,8 +42,8 @@ export function stopTimer(interval) {
   };
 }
 
-export function resetTimer(interval) {
-  clearInterval(interval);
+export function resetTimer() {
+  // clearInterval(interval);
   return {
     type: RESET_TIMER,
   };
@@ -118,5 +119,11 @@ export function updatePeeStatus(pee) {
   return {
     type: CHOOSE_PEE,
     pee,
+  };
+}
+
+export function resetRecord() {
+  return {
+    type: RESET_RECORD,
   };
 }

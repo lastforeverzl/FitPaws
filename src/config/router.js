@@ -29,7 +29,6 @@ const Root = StackNavigator({
     screen: Track,
   },
 }, {
-  mode: 'modal',
   headerMode: 'none',
 });
 

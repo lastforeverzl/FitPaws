@@ -12,3 +12,4 @@ export const CHOOSE_POOP_SHAPE = 'CHOOSE_POOP_SHAPE';
 export const CHOOSE_POOP_COLOR = 'CHOOSE_POOP_COLOR';
 export const CHOOSE_PEE = 'CHOOSE_PEE';
 export const CHOOSE_POOP = 'CHOOSE_POOP';
+export const RESET_RECORD = 'RESET_RECORD';

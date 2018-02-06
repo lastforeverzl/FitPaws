@@ -9,21 +9,23 @@ import Distance from '../containers/Distance';
 import SlidingPanel from '../containers/SlidingPanel';
 import BottomDrawer from '../containers/BottomDrawer';
 
-const Track = () => (
-  <View style={styles.container}>
-    <MyStatusBar />
-    <View style={styles.recordView}>
-      <Timer />
-      <Distance />
+const Track = (props) => {
+  return (
+    <View style={styles.container}>
+      <MyStatusBar />
+      <View style={styles.recordView}>
+        <Timer />
+        <Distance />
+      </View>
+      <View style={styles.mapView}>
+        <Map />
+      </View>
+      <Controller />
+      {/* <SlidingPanel /> */}
+      <BottomDrawer closePanel={() => props.navigation.goBack()} />
     </View>
-    <View style={styles.mapView}>
-      <Map />
-    </View>
-    <Controller />
-    {/* <SlidingPanel /> */}
-    <BottomDrawer />
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
