@@ -1,28 +1,18 @@
 import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 
-class TextField extends React.Component {
-  _onFocus = () => {
-    this.props.inputOnFocus();
-  }
-
-  _onChangeText = (text) => {
-    this.props.text(text);
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <TextInput
-          editable
-          onFocus={this._onFocus}
-          onChangeText={this._onChangeText}
-          value={this.props.value}
-        />
-      </View>
-    );
-  }
-}
+const TextField = (props) => {
+  return (
+    <View style={styles.container}>
+      <TextInput
+        editable
+        onFocus={() => props.inputOnFocus()}
+        onChangeText={text => props.text(text)}
+        value={props.value}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -4,33 +4,29 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as TimerActions from '../redux/actions';
 
-class Timer extends React.Component {
-  format = (propsTime) => {
-    const pad = (time, length) => {
-      let res = time;
-      while (res.length < length) {
-        res = '0'.concat(res);
-      }
-      return res;
-    };
+const format = (propsTime) => {
+  const pad = (time, length) => {
+    let res = time;
+    while (res.length < length) {
+      res = '0'.concat(res);
+    }
+    return res;
+  };
 
-    const t = new Date(propsTime);
-    const min = pad(t.getMinutes().toString(), 2);
-    const sec = pad(t.getSeconds().toString(), 2);
-    return `${min}:${sec}`;
-  }
+  const t = new Date(propsTime);
+  const min = pad(t.getMinutes().toString(), 2);
+  const sec = pad(t.getSeconds().toString(), 2);
+  return `${min}:${sec}`;
+};
 
-  render() {
-    return (
-      <View>
-        <Text style={[styles.counter, { fontFamily }]}>
-          {this.format(this.props.time)}
-        </Text>
-        <Text style={styles.text}>Time</Text>
-      </View>
-    );
-  }
-}
+const Timer = ({ time }) => (
+  <View>
+    <Text style={[styles.counter, { fontFamily }]}>
+      {format(time)}
+    </Text>
+    <Text style={styles.text}>Time</Text>
+  </View>
+);
 
 const fontFamily = Platform.OS === 'ios' ? 'HelveticaNeue-Medium' : 'monospace';
 
