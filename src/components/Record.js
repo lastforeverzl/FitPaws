@@ -9,7 +9,7 @@ export default class Record extends React.Component {
       <Icon name="album" type="MaterialCommunityIcons" size={32} color={tintColor} />,
   }
 
-  handleStartPress = () => {
+  _handleStartPress = () => {
     this.props.navigation.navigate('Track');
   };
 
@@ -44,7 +44,7 @@ export default class Record extends React.Component {
             fontWeight="bold"
             iconRight={{ name: 'guide-dog', type: 'foundation', size: 25 }}
             buttonStyle={styles.button}
-            onPress={this.handleStartPress}
+            onPress={this._handleStartPress}
           />
         </View>
       </View>

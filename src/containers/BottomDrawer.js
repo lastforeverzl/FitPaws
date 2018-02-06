@@ -22,13 +22,17 @@ const Screen = {
 };
 const fontFamily = Platform.OS === 'ios' ? 'HelveticaNeue' : 'monospace';
 
+/*
+  *  TODO: Integrated with database to save this walk record in _pressSave() method.
+  *  FIXME: Re-calculate the snapPoints of drawer to make scroll smoothly.
+  */
 class BottomDrawer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isCollapsed: true,
       snapPoints: [
-        { y: -720 },
+        { y: -750 },
         { y: -500 },
         { y: -400 },
         { y: -250 },
@@ -37,7 +41,7 @@ class BottomDrawer extends React.Component {
         { y: Screen.height - 300 },
         { y: Screen.height - 100 },
       ],
-      text: '',
+      note: '',
     };
     this._interactable = this._interactable.bind(this);
   }
@@ -57,7 +61,7 @@ class BottomDrawer extends React.Component {
   _inputOnFocus = () => {
     console.log('BottomDrawer _inputOnFocus');
     // this._interactable_ref.snapTo({ index: 0 });
-    const moveToY = this.state.isCollapsed ? -400 : -720;
+    const moveToY = this.state.isCollapsed ? -400 : -750;
     this._interactable_ref.changePosition({ y: moveToY });
   }
 
@@ -82,8 +86,17 @@ class BottomDrawer extends React.Component {
     actions.updatePeeStatus(status);
   }
 
-  _textOnChange = (text: string) => {
-    this.setState({ text });
+  _pressSave = () => {
+    const {
+      time, distanceTravelled, feelScale, poop, pee, poopColor, poopShape,
+    } = this.props;
+    console.log(`time: ${time}, distance: ${distanceTravelled}, feel: ${feelScale}`);
+    console.log(`poop: ${poop}, pee: ${pee}, color: ${poopColor}, shape: ${poopShape}`);
+    console.log(`note: ${this.state.note}`);
+  }
+
+  _textOnChange = (note: string) => {
+    this.setState({ note });
   }
 
   renderView() {
@@ -157,19 +170,21 @@ class BottomDrawer extends React.Component {
                 <CustomIcon name="note" size={24} color="#34495E" />
                 <Text style={[styles.text, styles.panelTitleText]} >Notes</Text>
               </View>
-              <TextField inputOnFocus={this._inputOnFocus} text={this._textOnChange} value={this.state.text} />
-            </View>
-            <View style={styles.saveButtonView}>
-              <Button
-                buttonStyle={styles.button}
-                fontWeight="bold"
-                fontSize={14}
-                large
-                raised
-                rounded
-                title="SAVE"
+              <TextField
+                inputOnFocus={this._inputOnFocus}
+                text={this._textOnChange}
+                value={this.state.note}
               />
             </View>
+            <Button
+              buttonStyle={styles.button}
+              borderRadius={5}
+              fontWeight="bold"
+              fontSize={14}
+              raised
+              onPress={this._pressSave}
+              title="SAVE"
+            />
           </Interactable.View>
         </View>
       );
@@ -185,11 +200,6 @@ class BottomDrawer extends React.Component {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: '#06D6A0',
-  },
-  saveButtonView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'stretch',
   },
   panelContainer: {
     position: 'absolute',
@@ -260,6 +270,9 @@ function mapStateToProps(state) {
     time: state.timer.time,
     poop: state.record.poop,
     pee: state.record.pee,
+    feelScale: state.record.feelScale,
+    poopColor: state.record.poopColor,
+    poopShape: state.record.poopShape,
   };
 }
 

@@ -83,7 +83,6 @@ class PoopColor extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: 72,
     marginTop: 10,
     marginBottom: 10,
   },

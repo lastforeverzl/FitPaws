@@ -3,6 +3,7 @@ import { View, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
 import { bindActionCreators } from 'redux';
+import CustomIcon from '../config/CustomIcon';
 import * as MapActions from '../redux/actions';
 
 const { width, height } = Dimensions.get('window');
@@ -49,13 +50,21 @@ class Map extends React.Component {
         <MapView
           style={styles.map}
           region={region}
-          showsUserLocation={true}
+          showsUserLocation
           // followsUserLocation={true}
         >
           <MapView.Marker
             coordinate={this.state.currentPosition}
             title="Marker"
-          />
+          >
+            <View style={{ marginBottom: 25 }}>
+              <CustomIcon
+                name="pin"
+                size={32}
+                color="#34495E"
+              />
+            </View>
+          </MapView.Marker>
           <MapView.Polyline
             coordinates={routeCoordinates}
             strokeColor="#34495E"

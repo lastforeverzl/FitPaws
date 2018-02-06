@@ -2,13 +2,6 @@ import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 
 class TextField extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      text: '',
-    };
-  }
-
   _onFocus = () => {
     this.props.inputOnFocus();
   }
@@ -22,8 +15,6 @@ class TextField extends React.Component {
       <View style={styles.container}>
         <TextInput
           editable
-          multiline
-          numberOfLines={4}
           onFocus={this._onFocus}
           onChangeText={this._onChangeText}
           value={this.props.value}
