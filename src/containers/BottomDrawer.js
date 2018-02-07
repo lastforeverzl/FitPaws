@@ -88,11 +88,13 @@ class BottomDrawer extends React.Component {
 
   _pressSave = () => {
     const {
-      time, distanceTravelled, feelScale, poop, pee, poopColor, poopShape,
+      time, distanceTravelled, feelScale, poop, pee, poopColor, poopShape, routeCoordinates,
     } = this.props;
     console.log(`time: ${time}, distance: ${distanceTravelled}, feel: ${feelScale}`);
     console.log(`poop: ${poop}, pee: ${pee}, color: ${poopColor}, shape: ${poopShape}`);
     console.log(`note: ${this.state.note}`);
+    // console.log(`routeCoordinates: ${routeCoordinates}`);
+    console.log(routeCoordinates);
 
     this._resetTrackRecord();
     this.props.closePanel();
@@ -278,6 +280,7 @@ function mapStateToProps(state) {
   return {
     visible: state.slidingPanel.panelVisible,
     distanceTravelled: state.location.distanceTravelled,
+    routeCoordinates: state.location.routeCoordinates,
     time: state.timer.time,
     poop: state.record.poop,
     pee: state.record.pee,
