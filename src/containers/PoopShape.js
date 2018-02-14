@@ -1,62 +1,25 @@
 import React from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import SingleShape from './SingleShape';
-
-const list = [
-  {
-    id: 1,
-    title: 'Separate hard lumps',
-    icon: 'poop-1',
-  },
-  {
-    id: 2,
-    title: 'Lumpy log with segments',
-    icon: 'poop-2',
-  },
-  {
-    id: 3,
-    title: 'Smooth log no visible segments',
-    icon: 'poop-3',
-  },
-  {
-    id: 4,
-    title: 'Very moist distinct logs',
-    icon: 'poop-4',
-  },
-  {
-    id: 5,
-    title: 'Very moist pile distinct shape',
-    icon: 'poop-5',
-  },
-  {
-    id: 6,
-    title: 'Piles with texture no shape',
-    icon: 'poop-6',
-  },
-  {
-    id: 7,
-    title: 'Watery no texture flat',
-    icon: 'poop-7',
-  },
-];
+import { POOP_SHAPE } from '../config/constants';
 
 class PoopShape extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: (new Map(): Map<number, boolean>),
+      selected: (new Map(): Map<string, boolean>),
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.collapse === true) {
       this.setState({
-        selected: (new Map(): Map<number, boolean>),
+        selected: (new Map(): Map<string, boolean>),
       });
     }
   }
 
-  _onPressItem = (id: number) => {
+  _onPressItem = (id: string) => {
     this.setState(() => {
       const selected = new Map();
       selected.set(id, !selected.get(id)); // toggle
@@ -78,10 +41,10 @@ class PoopShape extends React.Component {
     return (
       <View style={styles.container}>
         <FlatList
-          data={list}
+          data={POOP_SHAPE}
           horizontal
-          extraData={this.state.selected}
-          keyExtractor={(item, index) => item.id}
+          extraData={this.state}
+          keyExtractor={item => item.id}
           renderItem={this._renderItem}
           showsHorizontalScrollIndicator={false}
           removeClippedSubviews={false}

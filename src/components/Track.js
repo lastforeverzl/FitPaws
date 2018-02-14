@@ -6,7 +6,6 @@ import Timer from '../containers/Timer';
 import Controller from '../containers/Controller';
 import Map from '../containers/Map';
 import Distance from '../containers/Distance';
-import SlidingPanel from '../containers/SlidingPanel';
 import BottomDrawer from '../containers/BottomDrawer';
 
 const Track = (props) => {
@@ -21,7 +20,6 @@ const Track = (props) => {
         <Map />
       </View>
       <Controller />
-      {/* <SlidingPanel /> */}
       <BottomDrawer closePanel={() => props.navigation.goBack()} />
     </View>
   );

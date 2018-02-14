@@ -5,6 +5,9 @@ import {
   CHOOSE_PEE,
   CHOOSE_POOP,
   RESET_RECORD,
+  INSERT_RECORD_REQUEST,
+  INSERT_RECORD_SUCCESS,
+  INSERT_RECORD_FAILURE,
 } from '../constants';
 
 const initialState = {
@@ -13,6 +16,8 @@ const initialState = {
   poopShape: 0,
   poopColor: 0,
   pee: true,
+  error: '',
+  loading: false,
 };
 
 export default function record(state = initialState, action) {
@@ -44,6 +49,23 @@ export default function record(state = initialState, action) {
       };
     case RESET_RECORD:
       return initialState;
+    case INSERT_RECORD_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case INSERT_RECORD_SUCCESS:
+      return {
+        ...state,
+        error: '',
+        loading: false,
+      };
+    case INSERT_RECORD_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
     default:
       return state;
   }

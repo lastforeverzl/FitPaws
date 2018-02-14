@@ -1,12 +1,19 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { Avatar, Button, Icon } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as Actions from '../redux/actions';
 
-export default class Record extends React.Component {
+class Record extends React.Component {
   static navigationOptions = {
     tabBarLabel: 'Record',
     tabBarIcon: ({ tintColor }) =>
       <Icon name="album" type="MaterialCommunityIcons" size={32} color={tintColor} />,
+  }
+
+  componentDidMount() {
+    console.log('Record.js componentDidMount()');
   }
 
   _handleStartPress = () => {
@@ -14,6 +21,7 @@ export default class Record extends React.Component {
   };
 
   render() {
+    const { totalTime, totalDistance, avgTime, avgDistance } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.profileView}>
@@ -32,9 +40,10 @@ export default class Record extends React.Component {
           <Text style={styles.text}>
             On average per walk
           </Text>
-          <Text style={styles.historyText}>
-            16 min            1.2 mile
-          </Text>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={styles.historyText}>{avgTime} min</Text>
+            <Text style={styles.historyText}>{parseFloat(avgDistance).toFixed(2)} mile</Text>
+          </View>
         </View>
         <View style={styles.buttonView}>
           <Button
@@ -93,3 +102,23 @@ const styles = StyleSheet.create({
     width: 250,
   },
 });
+
+function mapStateToProps(state) {
+  return {
+    totalTime: state.history.totalTime,
+    totalDistance: state.history.totalDistance,
+    avgTime: state.history.avgTime,
+    avgDistance: state.history.avgDistance,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(Actions, dispatch),
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Record);

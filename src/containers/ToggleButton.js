@@ -2,23 +2,24 @@ import React from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import SingleButton from './SingleButton';
 
-const buttons = [{ id: 1, title: 'YES' }, { id: 2, title: 'NO' }];
+const buttons = [{ id: '1', title: 'YES' }, { id: '2', title: 'NO' }];
 
 class ToggleButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: (new Map(): Map<number, boolean>),
+      selected: (new Map(): Map<string, boolean>),
     };
   }
 
-  _onPressItem = (id: number) => {
+  _onPressItem = (id: string) => {
+    console.log(typeof id);
     this.setState(() => {
       const selected = new Map();
       selected.set(id, !selected.get(id)); // toggle
       return { selected };
     });
-    this.props.onPressButton(id === 1);
+    this.props.onPressButton(id === '1');
   }
 
   _renderItem = ({ item }) => (

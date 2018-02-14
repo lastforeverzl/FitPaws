@@ -16,7 +16,15 @@ import {
   CHOOSE_PEE,
   CHOOSE_POOP,
   RESET_RECORD,
+  UPDATE_HISTORY_DATA,
+  INSERT_RECORD_REQUEST,
+  INSERT_RECORD_SUCCESS,
+  INSERT_RECORD_FAILURE,
+  QUERY_RECORDS_REQUEST,
+  QUERY_RECORDS_SUCCESS,
+  QUERY_RECORDS_FAILURE,
 } from '../constants';
+import { queryAllRecords, insertNewRecord } from '../../database/schemas';
 
 export function startTimer() {
   return (dispatch) => {
@@ -127,3 +135,85 @@ export function resetRecord() {
     type: RESET_RECORD,
   };
 }
+
+/*
+ *  History actions
+ */
+export function updateHistoryData(historyData) {
+  const sum = (acc, cur) => acc + cur;
+  const size = historyData.length;
+  const totalTime = historyData.map(item => item.time).reduce(sum);
+  const totalDistance = historyData.map(item => item.distance).reduce(sum);
+  const avgTime = Math.round(totalTime / size);
+  const avgDistance = totalDistance / size;
+
+  return {
+    type: UPDATE_HISTORY_DATA,
+    historyData,
+    totalTime,
+    totalDistance,
+    avgTime,
+    avgDistance,
+  };
+}
+
+/*
+ * Database operations.
+ */
+export const queryFromDatabase = () => {
+  return (dispatch) => {
+    dispatch({ type: QUERY_RECORDS_REQUEST });
+
+    queryAllRecords().then((historyData) => {
+      const sum = (acc, cur) => acc + cur;
+      const size = historyData.length;
+      const totalTime = historyData.map(item => item.time).reduce(sum);
+      const totalDistance = historyData.map(item => item.distance).reduce(sum);
+      const avgTime = Math.round(totalTime / size);
+      const avgDistance = totalDistance / size;
+
+      dispatch({
+        type: QUERY_RECORDS_SUCCESS,
+        historyData,
+        totalTime,
+        totalDistance,
+        avgTime,
+        avgDistance,
+      });
+    }).catch((error) => {
+      dispatch({ type: QUERY_RECORDS_FAILURE, payload: error });
+    });
+  };
+};
+
+export const insertRecordToDb = (record) => {
+  return (dispatch) => {
+    dispatch({ type: INSERT_RECORD_REQUEST });
+
+    insertNewRecord(record)
+      .then(() => {
+        queryAllRecords()
+          .then((historyData) => {
+            const sum = (acc, cur) => acc + cur;
+            const size = historyData.length;
+            const totalTime = historyData.map(item => item.time).reduce(sum);
+            const totalDistance = historyData.map(item => item.distance).reduce(sum);
+            const avgTime = Math.round(totalTime / size);
+            const avgDistance = totalDistance / size;
+
+            dispatch({
+              type: UPDATE_HISTORY_DATA,
+              historyData,
+              totalTime,
+              totalDistance,
+              avgTime,
+              avgDistance,
+            });
+          });
+        dispatch({ type: INSERT_RECORD_SUCCESS });
+      })
+      .catch((error) => {
+        dispatch({ type: INSERT_RECORD_FAILURE, payload: error });
+      });
+  };
+};

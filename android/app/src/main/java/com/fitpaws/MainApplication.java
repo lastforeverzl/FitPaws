@@ -3,6 +3,8 @@ package com.fitpaws;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import io.realm.react.RealmReactPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.wix.interactable.Interactable;
 import com.airbnb.android.react.maps.MapsPackage;
@@ -27,6 +29,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new SplashScreenReactPackage(),
+            new RealmReactPackage(),
             new LinearGradientPackage(),
             new Interactable(),
             new MapsPackage(),

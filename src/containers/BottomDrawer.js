@@ -96,6 +96,7 @@ class BottomDrawer extends React.Component {
     // console.log(`routeCoordinates: ${routeCoordinates}`);
     console.log(routeCoordinates);
 
+    // TODO: Save time as minutes in database, distance as 0.01.
     this._resetTrackRecord();
     this.props.closePanel();
   }
