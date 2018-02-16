@@ -23,8 +23,11 @@ import {
   QUERY_RECORDS_REQUEST,
   QUERY_RECORDS_SUCCESS,
   QUERY_RECORDS_FAILURE,
+  DELETE_RECORD_REQUEST,
+  DELETE_RECORD_SUCCESS,
+  DELETE_RECORD_FAILURE,
 } from '../constants';
-import { queryAllRecords, insertNewRecord } from '../../database/schemas';
+import { queryAllRecords, insertNewRecord, deleteRecord } from '../../database/schemas';
 
 export function startTimer() {
   return (dispatch) => {
@@ -214,6 +217,38 @@ export const insertRecordToDb = (record) => {
       })
       .catch((error) => {
         dispatch({ type: INSERT_RECORD_FAILURE, payload: error });
+      });
+  };
+};
+
+export const deleteRecordFromDb = (id) => {
+  return (dispatch) => {
+    dispatch({ type: DELETE_RECORD_REQUEST });
+
+    deleteRecord(id)
+      .then(() => {
+        queryAllRecords()
+          .then((historyData) => {
+            const sum = (acc, cur) => acc + cur;
+            const size = historyData.length;
+            const totalTime = historyData.map(item => item.time).reduce(sum);
+            const totalDistance = historyData.map(item => item.distance).reduce(sum);
+            const avgTime = Math.round(totalTime / size);
+            const avgDistance = totalDistance / size;
+
+            dispatch({
+              type: UPDATE_HISTORY_DATA,
+              historyData,
+              totalTime,
+              totalDistance,
+              avgTime,
+              avgDistance,
+            });
+          });
+        dispatch({ type: DELETE_RECORD_SUCCESS });
+      })
+      .catch((error) => {
+        dispatch({ type: DELETE_RECORD_FAILURE, payload: error });
       });
   };
 };

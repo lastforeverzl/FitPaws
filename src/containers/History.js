@@ -34,20 +34,15 @@ class History extends React.Component {
   }
 
   render() {
-    const { error, loading } = this.props;
-    console.log(`record error: ${error}, record loading: ${loading}`);
     return (
       <View style={styles.container}>
         <MyStatusBar />
-        <Text style={styles.text}>
-          History
-        </Text>
         <TouchableOpacity
           onPress={this._addTestData}
         >
           <Text style={{ color: 'skyblue' }}>ADD</Text>
         </TouchableOpacity>
-        <HistoryTab />
+        <HistoryTab screenProps={{ navigation: this.props.navigation }} />
       </View>
     );
   }
@@ -56,8 +51,6 @@ class History extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
     backgroundColor: '#FFFFFF',
   },
   text: {

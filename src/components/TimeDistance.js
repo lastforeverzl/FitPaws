@@ -3,28 +3,13 @@ import { Platform, StyleSheet, View, Text } from 'react-native';
 
 const fontFamily = Platform.OS === 'ios' ? 'HelveticaNeue-Medium' : 'monospace';
 
-const format = (propsTime) => {
-  const pad = (time, length) => {
-    let res = time;
-    while (res.length < length) {
-      res = '0'.concat(res);
-    }
-    return res;
-  };
-
-  const t = new Date(propsTime);
-  const min = pad(t.getMinutes().toString(), 2);
-  const sec = pad(t.getSeconds().toString(), 2);
-  return `${min}:${sec}`;
-};
-
 const TimeDistance = ({ time, distance }) => (
   <View style={styles.container}>
     <View>
       <Text style={styles.number}>
-        { format(time) }
+        { time }
       </Text>
-      <Text style={styles.text}>Time</Text>
+      <Text style={styles.text}>Time(min)</Text>
     </View>
     <View>
       <Text style={styles.number}>

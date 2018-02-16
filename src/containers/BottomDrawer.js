@@ -113,6 +113,21 @@ class BottomDrawer extends React.Component {
     this.setState({ note });
   }
 
+  _timeFormat = (propsTime) => {
+    const pad = (time, length) => {
+      let res = time;
+      while (res.length < length) {
+        res = '0'.concat(res);
+      }
+      return res;
+    };
+
+    const t = new Date(propsTime);
+    const min = pad(t.getMinutes().toString(), 2);
+    const sec = pad(t.getSeconds().toString(), 2);
+    return `${min}:${sec}`;
+  }
+
   renderView() {
     const {
       visible, distanceTravelled, time, poop, pee,
@@ -151,7 +166,7 @@ class BottomDrawer extends React.Component {
                 <Text style={styles.text}>{this._getCurrentTime()}</Text>
               </View>
               <TextDivider text="Today's walk" />
-              <TimeDistance time={time} distance={distanceTravelled} />
+              <TimeDistance time={this._timeFormat(time)} distance={distanceTravelled} />
               <TextDivider text="How Kipper feels after the walk?" />
               <FeelScale />
             </View>

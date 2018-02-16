@@ -3,6 +3,7 @@ import Profile from '../components/Profile';
 import History from '../containers/History';
 import Record from '../components/Record';
 import Track from '../components/Track';
+import RecordDetail from '../containers/RecordDetail';
 
 export const Tabs = TabNavigator({
   History: { screen: History },
@@ -27,6 +28,9 @@ const Root = StackNavigator({
   },
   Track: {
     screen: Track,
+  },
+  RecordDetail: {
+    screen: RecordDetail,
   },
 }, {
   headerMode: 'none',

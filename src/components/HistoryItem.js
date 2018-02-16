@@ -1,11 +1,11 @@
 import React from 'react';
-import { Text, View, StyleSheet, Platform } from 'react-native';
+import { Text, View, StyleSheet, Platform, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 import CustomIcon from '../config/CustomIcon';
 import { FEEL_SCALE, POOP_SHAPE, POOP_COLOR } from '../config/constants';
 
 const HistoryItem = props => (
-  <View>
+  <TouchableOpacity activeOpacity={0.5} onPress={props.onPressItem}>
     <View style={styles.row}>
       <Text style={[styles.text, { color: '#97A6A7' }]}>
         {props.item.creationDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
@@ -92,7 +92,7 @@ const HistoryItem = props => (
         <Text style={styles.text}>{props.item.pee ? 'peed' : 'no pee'}</Text>
       </View>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 
 const fontFamily = Platform.OS === 'ios' ? 'HelveticaNeue-Medium' : 'monospace';

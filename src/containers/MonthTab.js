@@ -82,6 +82,21 @@ class MonthTab extends React.Component {
     this._calculate(this.props.historyData, newDate);
   }
 
+  _pressItem = (item) => {
+    this.props.screenProps.navigation.navigate('RecordDetail', {
+      itemId: item.id,
+      itemTime: item.time,
+      itemDistance: item.distance,
+      itemPoop: item.poop,
+      itemPee: item.pee,
+      itemRouteCoordinates: item.routeCoordinates,
+      itemPoopShape: item.poopShape,
+      itemPoopColor: item.poopColor,
+      itemFeelScale: item.feelScale,
+      itemCreationDate: item.creationDate,
+    });
+  }
+
   _renderItem = ({ item }) => (
     <View style={styles.item}>
       <Text>
@@ -89,6 +104,7 @@ class MonthTab extends React.Component {
       </Text>
       <HistoryItem
         item={item}
+        onPressItem={() => this._pressItem(item)}
       />
     </View>
   )
@@ -136,6 +152,7 @@ class MonthTab extends React.Component {
           renderItem={this._renderItem}
           ListHeaderComponent={this._renderHeader}
           ItemSeparatorComponent={this._renderSeparator}
+          bounces={false}
         />
       </View>
     );
