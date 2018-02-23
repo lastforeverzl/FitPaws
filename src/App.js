@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import { AsyncStorage } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';

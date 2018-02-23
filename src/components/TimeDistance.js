@@ -3,13 +3,13 @@ import { Platform, StyleSheet, View, Text } from 'react-native';
 
 const fontFamily = Platform.OS === 'ios' ? 'HelveticaNeue-Medium' : 'monospace';
 
-const TimeDistance = ({ time, distance }) => (
+const TimeDistance = ({ time, distance, timeUnit }) => (
   <View style={styles.container}>
     <View>
       <Text style={styles.number}>
         { time }
       </Text>
-      <Text style={styles.text}>Time(min)</Text>
+      <Text style={styles.text}>Time({timeUnit})</Text>
     </View>
     <View>
       <Text style={styles.number}>

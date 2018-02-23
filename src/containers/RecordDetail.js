@@ -66,9 +66,6 @@ class RecordDetail extends React.Component {
   }
 
   _pressDelete = (id) => {
-    // console.log('_pressDelete');
-    // this.props.actions.deleteRecordFromDb(id);
-    // this.props.navigation.goBack();
     this.setState({ loading: true });
     Alert.alert(
       'Do you want to delete this record?',
@@ -164,7 +161,7 @@ class RecordDetail extends React.Component {
       return (
         <View style={styles.feelItem}>
           <View style={[styles.poopColor, { backgroundColor: poopShapeColor }]} />
-          <Text style={[styles.text, { color: poopShapeColor }]} >
+          <Text style={[styles.text, { color: '#34495E' }]} >
             {poopShapeTitle}
           </Text>
         </View>
@@ -175,7 +172,7 @@ class RecordDetail extends React.Component {
 
   _renderPoopStatus = () => {
     const { item } = this.state;
-    const color = item.poop ? '#34495E' : '#3D4143';
+    const color = item.poop ? '#34495E' : '#97A6A7';
     return (
       <View style={styles.feelItem}>
         <CustomIcon name="poopIcon" size={32} color={color} />
@@ -186,7 +183,7 @@ class RecordDetail extends React.Component {
 
   _renderPeeStatus = () => {
     const { item } = this.state;
-    const color = item.pee ? '#34495E' : '#3D4143';
+    const color = item.pee ? '#34495E' : '#97A6A7';
     return (
       <View style={styles.feelItem}>
         <CustomIcon name="peeIcon" size={32} color={color} />
@@ -286,7 +283,6 @@ class RecordDetail extends React.Component {
             />
           </Interactable.View>
         </View>
-        
       </View>
     );
   }
@@ -370,7 +366,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#B9C4C5',
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: 'normal',
     textAlign: 'center',
     fontFamily,

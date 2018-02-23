@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Icon, Button } from 'react-native-elements';
 import Interactable from 'react-native-interactable';
 import Collapsible from 'react-native-collapsible';
+import uuid from 'uuid';
 import * as Actions from '../redux/actions';
 import TextDivider from '../components/TextDivider';
 import TimeDistance from '../components/TimeDistance';
@@ -42,6 +43,8 @@ class BottomDrawer extends React.Component {
         { y: Screen.height - 100 },
       ],
       note: '',
+      timeUnit: 'min',
+      loading: false,
     };
     this._interactable = this._interactable.bind(this);
   }
@@ -88,15 +91,33 @@ class BottomDrawer extends React.Component {
 
   _pressSave = () => {
     const {
-      time, distanceTravelled, feelScale, poop, pee, poopColor, poopShape, routeCoordinates,
+      time,
+      distanceTravelled,
+      feelScale,
+      poop,
+      pee,
+      poopColor,
+      poopShape,
+      routeCoordinates,
+      actions,
     } = this.props;
-    console.log(`time: ${time}, distance: ${distanceTravelled}, feel: ${feelScale}`);
-    console.log(`poop: ${poop}, pee: ${pee}, color: ${poopColor}, shape: ${poopShape}`);
-    console.log(`note: ${this.state.note}`);
-    // console.log(`routeCoordinates: ${routeCoordinates}`);
-    console.log(routeCoordinates);
+    this.setState({ loading: true });
 
-    // TODO: Save time as minutes in database, distance as 0.01.
+    const insertData = {
+      id: uuid.v1(),
+      time: Math.ceil(time / 60000),
+      distance: parseFloat(distanceTravelled),
+      poop,
+      pee,
+      routeCoordinates: JSON.stringify(routeCoordinates),
+      poopShape,
+      poopColor,
+      feelScale,
+      creationDate: new Date(Date.now() - time),
+    };
+    console.log(insertData);
+
+    actions.insertRecordToDb(insertData);
     this._resetTrackRecord();
     this.props.closePanel();
   }
@@ -123,8 +144,14 @@ class BottomDrawer extends React.Component {
     };
 
     const t = new Date(propsTime);
-    const min = pad(t.getMinutes().toString(), 2);
-    const sec = pad(t.getSeconds().toString(), 2);
+    const hour = t.getUTCHours();
+    const min = pad(t.getUTCMinutes().toString(), 2);
+    const sec = pad(t.getUTCSeconds().toString(), 2);
+    if (hour > 0) {
+      this.setState({ timeUnit: 'hr' });
+      const hr = pad(t.getUTCHours().toString(), 2);
+      return `${hr}:${min}`;
+    }
     return `${min}:${sec}`;
   }
 
@@ -135,7 +162,7 @@ class BottomDrawer extends React.Component {
     console.log(`click collapse, poop: ${poop}, pee: ${pee}`);
     if (visible) {
       return (
-        <View style={styles.panelContainer}>
+        <View style={styles.panelContainer} pointerEvents="box-none" >
           <Animated.View
             pointerEvents="box-none"
             style={[styles.panelContainer, {
@@ -148,7 +175,7 @@ class BottomDrawer extends React.Component {
             verticalOnly
             snapPoints={this.state.snapPoints}
             boundaries={{ top: -800 }}
-            initialPosition={{ y: Screen.height - 130 }}
+            initialPosition={{ y: Screen.height - 200 }}
           >
             <View style={styles.panel}>
               <View style={styles.icon}>
@@ -166,7 +193,11 @@ class BottomDrawer extends React.Component {
                 <Text style={styles.text}>{this._getCurrentTime()}</Text>
               </View>
               <TextDivider text="Today's walk" />
-              <TimeDistance time={this._timeFormat(time)} distance={distanceTravelled} />
+              <TimeDistance
+                time={this._timeFormat(time)}
+                distance={distanceTravelled}
+                timeUnit={this.state.timeUnit}
+              />
               <TextDivider text="How Kipper feels after the walk?" />
               <FeelScale />
             </View>
@@ -206,6 +237,8 @@ class BottomDrawer extends React.Component {
               />
             </View>
             <Button
+              loading={this.state.loading}
+              disabled={this.state.loading}
               buttonStyle={styles.button}
               borderRadius={5}
               fontWeight="bold"

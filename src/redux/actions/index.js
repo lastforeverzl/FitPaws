@@ -195,24 +195,6 @@ export const insertRecordToDb = (record) => {
 
     insertNewRecord(record)
       .then(() => {
-        queryAllRecords()
-          .then((historyData) => {
-            const sum = (acc, cur) => acc + cur;
-            const size = historyData.length;
-            const totalTime = historyData.map(item => item.time).reduce(sum);
-            const totalDistance = historyData.map(item => item.distance).reduce(sum);
-            const avgTime = Math.round(totalTime / size);
-            const avgDistance = totalDistance / size;
-
-            dispatch({
-              type: UPDATE_HISTORY_DATA,
-              historyData,
-              totalTime,
-              totalDistance,
-              avgTime,
-              avgDistance,
-            });
-          });
         dispatch({ type: INSERT_RECORD_SUCCESS });
       })
       .catch((error) => {
@@ -227,24 +209,6 @@ export const deleteRecordFromDb = (id) => {
 
     deleteRecord(id)
       .then(() => {
-        queryAllRecords()
-          .then((historyData) => {
-            const sum = (acc, cur) => acc + cur;
-            const size = historyData.length;
-            const totalTime = historyData.map(item => item.time).reduce(sum);
-            const totalDistance = historyData.map(item => item.distance).reduce(sum);
-            const avgTime = Math.round(totalTime / size);
-            const avgDistance = totalDistance / size;
-
-            dispatch({
-              type: UPDATE_HISTORY_DATA,
-              historyData,
-              totalTime,
-              totalDistance,
-              avgTime,
-              avgDistance,
-            });
-          });
         dispatch({ type: DELETE_RECORD_SUCCESS });
       })
       .catch((error) => {

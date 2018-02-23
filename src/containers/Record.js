@@ -12,10 +12,6 @@ class Record extends React.Component {
       <Icon name="album" type="MaterialCommunityIcons" size={32} color={tintColor} />,
   }
 
-  componentDidMount() {
-    console.log('Record.js componentDidMount()');
-  }
-
   _handleStartPress = () => {
     this.props.navigation.navigate('Track');
   };

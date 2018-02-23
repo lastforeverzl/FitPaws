@@ -35,17 +35,21 @@ const HistoryItem = props => (
           {parseFloat(props.item.distance).toFixed(2)} mile
         </Text>
       </View>
-      <View style={styles.iconTextContainer}>
-        <Icon
-          name={FEEL_SCALE[props.item.feelScale - 1].icon}
-          type="material-community"
-          size={14}
-          color="#2C3E50"
-        />
-        <Text style={[styles.text, { marginLeft: 5, fontSize: 14 }]}>
-          {FEEL_SCALE[props.item.feelScale - 1].feel}
-        </Text>
-      </View>
+      {
+        props.item.feelScale > 0 ?
+          <View style={styles.iconTextContainer}>
+            <Icon
+              name={FEEL_SCALE[props.item.feelScale - 1].icon}
+              type="material-community"
+              size={14}
+              color="#2C3E50"
+            />
+            <Text style={[styles.text, { marginLeft: 5, fontSize: 14 }]}>
+              {FEEL_SCALE[props.item.feelScale - 1].feel}
+            </Text>
+          </View> :
+          <View />
+      }
     </View>
     <View style={styles.row}>
       <CustomIcon name="poopIcon" size={12} color="#34495E" />
@@ -81,7 +85,7 @@ const HistoryItem = props => (
                 <View />
             }
           </View> :
-          <View style={{ marginRight: 15 }}>
+          <View style={{ marginLeft: 15 }}>
             <Text style={styles.text}>no poop</Text>
           </View>
       }

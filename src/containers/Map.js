@@ -14,8 +14,13 @@ const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 class Map extends React.Component {
   constructor(props) {
     super(props);
+    this._mapRef = null;
     this.state = {
       currentPosition: {
+        latitude: 0,
+        longitude: 0,
+      },
+      finalPosition: {
         latitude: 0,
         longitude: 0,
       },
@@ -37,6 +42,45 @@ class Map extends React.Component {
     );
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.panelVisible) {
+      console.log('componentWillReceiveProps');
+      this._mapRef.fitToCoordinates(
+        nextProps.routeCoordinates,
+        {
+          edgePadding: {
+            top: 100, right: 100, bottom: 300, left: 100,
+          },
+          animated: true,
+        },
+      );
+      const { routeCoordinates } = nextProps;
+      this.setState({
+        finalPosition: routeCoordinates[routeCoordinates.length - 1],
+      });
+    }
+  }
+
+  _renderFinalMarker = () => {
+    if (this.props.panelVisible) {
+      return (
+        <MapView.Marker
+          coordinate={this.state.finalPosition}
+          title="Marker"
+        >
+          <View style={{ marginBottom: 25 }}>
+            <CustomIcon
+              name="pin"
+              size={32}
+              color="#34495E"
+            />
+          </View>
+        </MapView.Marker>
+      );
+    }
+    return null;
+  }
+
   render() {
     const { prevLatLng, routeCoordinates } = this.props;
     const region = {
@@ -48,10 +92,10 @@ class Map extends React.Component {
     return (
       <View>
         <MapView
+          ref={(ref) => { this._mapRef = ref; }}
           style={styles.map}
           region={region}
-          showsUserLocation
-          // followsUserLocation={true}
+          showsUserLocation={!this.props.panelVisible}
         >
           <MapView.Marker
             coordinate={this.state.currentPosition}
@@ -65,6 +109,7 @@ class Map extends React.Component {
               />
             </View>
           </MapView.Marker>
+          {this._renderFinalMarker()}
           <MapView.Polyline
             coordinates={routeCoordinates}
             strokeColor="#34495E"
@@ -88,6 +133,7 @@ function mapStateToProps(state) {
   return {
     routeCoordinates: state.location.routeCoordinates,
     prevLatLng: state.location.prevLatLng,
+    panelVisible: state.slidingPanel.panelVisible,
   };
 }
 
