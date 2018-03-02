@@ -274,6 +274,7 @@ class RecordDetail extends React.Component {
               loading={this.state.loading}
               disabled={this.state.loading}
               buttonStyle={{ backgroundColor: '#d6063c' }}
+              containerViewStyle={{ width: '100%', marginLeft: 0 }}
               borderRadius={5}
               fontWeight="bold"
               fontSize={14}

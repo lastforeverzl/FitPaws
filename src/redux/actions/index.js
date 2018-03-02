@@ -26,6 +26,7 @@ import {
   DELETE_RECORD_REQUEST,
   DELETE_RECORD_SUCCESS,
   DELETE_RECORD_FAILURE,
+  UPDATE_DOG_PROFILE,
 } from '../constants';
 import { queryAllRecords, insertNewRecord, deleteRecord } from '../../database/schemas';
 
@@ -170,10 +171,22 @@ export const queryFromDatabase = () => {
     queryAllRecords().then((historyData) => {
       const sum = (acc, cur) => acc + cur;
       const size = historyData.length;
-      const totalTime = historyData.map(item => item.time).reduce(sum);
-      const totalDistance = historyData.map(item => item.distance).reduce(sum);
-      const avgTime = Math.round(totalTime / size);
-      const avgDistance = totalDistance / size;
+      let totalTime;
+      let totalDistance;
+      let avgTime;
+      let avgDistance;
+      if (size > 0) {
+        totalTime = historyData.map(item => item.time).reduce(sum);
+        totalDistance = historyData.map(item => item.distance).reduce(sum);
+        avgTime = Math.round(totalTime / size);
+        avgDistance = totalDistance / size;
+      } else {
+        console.log('historyData is empty');
+        totalTime = 0;
+        totalDistance = 0;
+        avgTime = 0;
+        avgDistance = 0;
+      }
 
       dispatch({
         type: QUERY_RECORDS_SUCCESS,
@@ -184,6 +197,7 @@ export const queryFromDatabase = () => {
         avgDistance,
       });
     }).catch((error) => {
+      console.log(error);
       dispatch({ type: QUERY_RECORDS_FAILURE, payload: error });
     });
   };
@@ -214,5 +228,13 @@ export const deleteRecordFromDb = (id) => {
       .catch((error) => {
         dispatch({ type: DELETE_RECORD_FAILURE, payload: error });
       });
+  };
+};
+
+export const updateDogProfile = (avatar, dogName) => {
+  return {
+    type: UPDATE_DOG_PROFILE,
+    avatar,
+    dogName,
   };
 };

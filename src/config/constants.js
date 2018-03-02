@@ -86,3 +86,17 @@ export const POOP_COLOR = [
     color: '#3B3B3B',
   },
 ];
+
+export const AVATAR_URL_KEY = 'AVATAR_URL_KEY';
+
+export const PROFILE_DOG_NAME = 'PROFILE_NAME';
+
+export const PROFILE_DOG_BREED = 'PROFILE_DOG_BREED';
+
+export const PROFILE_DOG_WEIGHT = 'PROFILE_DOG_WEIGHT';
+
+export const PROFILE_DOG_BIRTHDAY = 'PROFILE_DOG_BIRTHDAY';
+
+export const PROFILE_DOG_IN_TAKE = 'PROFILE_DOG_IN_TAKE';
+
+export const NOT_FIRST_LAUNCH = 'NOT_FIRST_LAUNCH';

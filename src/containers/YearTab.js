@@ -95,9 +95,6 @@ class YearTab extends React.Component {
 
   _renderItem = ({ item }) => (
     <View style={styles.item}>
-      <Text>
-        {item.id}
-      </Text>
       <HistoryItem
         item={item}
         onPressItem={() => this._pressItem(item)}

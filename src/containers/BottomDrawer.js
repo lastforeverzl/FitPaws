@@ -110,8 +110,8 @@ class BottomDrawer extends React.Component {
       poop,
       pee,
       routeCoordinates: JSON.stringify(routeCoordinates),
-      poopShape,
-      poopColor,
+      poopShape: parseInt(poopShape, 10),
+      poopColor: parseInt(poopColor, 10),
       feelScale,
       creationDate: new Date(Date.now() - time),
     };
@@ -157,9 +157,10 @@ class BottomDrawer extends React.Component {
 
   renderView() {
     const {
-      visible, distanceTravelled, time, poop, pee,
+      visible, distanceTravelled, time, poop, pee, error, loading
     } = this.props;
-    console.log(`click collapse, poop: ${poop}, pee: ${pee}`);
+    // console.log(`click collapse: ${poop}, pee: ${pee}`);
+    console.log(`error: ${error}, loading: ${loading}`);
     if (visible) {
       return (
         <View style={styles.panelContainer} pointerEvents="box-none" >
@@ -240,6 +241,7 @@ class BottomDrawer extends React.Component {
               loading={this.state.loading}
               disabled={this.state.loading}
               buttonStyle={styles.button}
+              containerViewStyle={{ width: '100%', marginLeft: 0 }}
               borderRadius={5}
               fontWeight="bold"
               fontSize={14}
@@ -336,6 +338,8 @@ function mapStateToProps(state) {
     feelScale: state.record.feelScale,
     poopColor: state.record.poopColor,
     poopShape: state.record.poopShape,
+    error: state.record.error,
+    loading: state.record.error,
   };
 }
 

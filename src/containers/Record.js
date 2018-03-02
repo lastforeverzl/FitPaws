@@ -1,25 +1,86 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { Avatar, Button, Icon } from 'react-native-elements';
+import { Text, View, StyleSheet, AsyncStorage, ImageBackground } from 'react-native';
+import { Avatar, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as Actions from '../redux/actions';
+import { AVATAR_URL_KEY, PROFILE_DOG_NAME } from '../config/constants';
+import RecordInfo from '../components/RecordInfo';
+
+const initialTotal = {
+  totalMinutes: 0,
+  totalMile: 0,
+};
+const initialAvg = {
+  avgMinutes: 0,
+  avgMile: 0,
+};
 
 class Record extends React.Component {
-  static navigationOptions = {
-    tabBarLabel: 'Record',
-    tabBarIcon: ({ tintColor }) =>
-      <Icon name="album" type="MaterialCommunityIcons" size={32} color={tintColor} />,
+  constructor(props) {
+    super(props);
+    this.state = {
+      avatarSource: null,
+      dogName: '',
+      selectedIndex: 0,
+      total: initialTotal,
+      avg: initialAvg,
+    };
+  }
+
+  componentWillMount() {
+    this._loadProfile();
+  }
+
+  componentDidMount() {
+    this._calculate(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('Record componentWillReceiveProps');
+    this.setState({ avatarSource: nextProps.avatar });
+    this.setState({ dogName: nextProps.dogName });
+    this._calculate(nextProps);
+  }
+
+  _calculate = (props) => {
+    const total = {
+      totalMinutes: props.totalTime,
+      totalMile: parseFloat(props.totalDistance).toFixed(1),
+    };
+    const avg = {
+      avgMinutes: props.avgTime,
+      avgMile: parseFloat(props.avgDistance).toFixed(1),
+    };
+    this.setState({ total });
+    this.setState({ avg });
+  }
+
+  _loadProfile = async () => {
+    try {
+      const avatar = await AsyncStorage.getItem(AVATAR_URL_KEY);
+      const dogName = await AsyncStorage.getItem(PROFILE_DOG_NAME);
+
+      if (avatar !== null) {
+        this.setState({ avatarSource: JSON.parse(avatar) });
+      }
+      if (dogName !== null) {
+        this.setState({ dogName });
+      }
+    } catch (e) {
+      console.error('Failed to load profile.');
+    }
   }
 
   _handleStartPress = () => {
     this.props.navigation.navigate('Track');
   };
 
+  _updateIndex = (selectedIndex) => {
+    this.setState({ selectedIndex });
+  }
+
   render() {
-    const { totalTime, totalDistance, avgTime, avgDistance } = this.props;
     return (
-      <View style={styles.container}>
+      <ImageBackground source={require('../../assets/terrain-map.png')} style={styles.container}>
         <View style={styles.profileView}>
           <Avatar
             medium
@@ -27,19 +88,19 @@ class Record extends React.Component {
             icon={{ name: 'user', type: 'font-awesome', color: 'black' }}
             overlayContainerStyle={{ backgroundColor: 'white' }}
             activeOpacity={0.7}
+            source={this.state.avatarSource}
           />
           <Text style={styles.text}>
-            Wenyang and Kipper
+            {this.state.dogName}
           </Text>
         </View>
         <View style={styles.historyView}>
-          <Text style={styles.text}>
-            On average per walk
-          </Text>
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.historyText}>{avgTime} min</Text>
-            <Text style={styles.historyText}>{parseFloat(avgDistance).toFixed(2)} mile</Text>
-          </View>
+          <RecordInfo
+            updateIndex={this._updateIndex}
+            selectedIndex={this.state.selectedIndex}
+            avgData={this.state.avg}
+            totalData={this.state.total}
+          />
         </View>
         <View style={styles.buttonView}>
           <Button
@@ -52,7 +113,7 @@ class Record extends React.Component {
             onPress={this._handleStartPress}
           />
         </View>
-      </View>
+      </ImageBackground>
     );
   }
 }
@@ -63,7 +124,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000000',
   },
   text: {
     color: '#ffffff',
@@ -94,7 +154,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    backgroundColor: '#66BB66',
+    backgroundColor: '#06D6A0',
     width: 250,
   },
 });
@@ -105,16 +165,9 @@ function mapStateToProps(state) {
     totalDistance: state.history.totalDistance,
     avgTime: state.history.avgTime,
     avgDistance: state.history.avgDistance,
+    avatar: state.profile.avatar,
+    dogName: state.profile.dogName,
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(Actions, dispatch),
-  };
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Record);
+export default connect(mapStateToProps)(Record);
