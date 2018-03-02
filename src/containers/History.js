@@ -32,6 +32,7 @@ class History extends React.Component {
       poopShape: 1,
       poopColor: 3,
       feelScale: 2,
+      note: 'This is a test note.',
       creationDate: new Date(),
     };
     console.log(test);

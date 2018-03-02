@@ -15,6 +15,7 @@ export const RecordSchema = {
     poopShape: 'int',
     poopColor: 'int',
     feelScale: 'int',
+    note: 'string',
     creationDate: 'date',
   },
 };

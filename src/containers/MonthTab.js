@@ -93,6 +93,7 @@ class MonthTab extends React.Component {
       itemPoopShape: item.poopShape,
       itemPoopColor: item.poopColor,
       itemFeelScale: item.feelScale,
+      itemNote: item.note,
       itemCreationDate: item.creationDate,
     });
   }

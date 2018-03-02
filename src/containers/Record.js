@@ -35,10 +35,12 @@ class Record extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('Record componentWillReceiveProps');
-    this.setState({ avatarSource: nextProps.avatar });
-    this.setState({ dogName: nextProps.dogName });
+    this._loadProfile();
     this._calculate(nextProps);
+  }
+
+  componentWillUnmount() {
+    console.log('Record componentWillUnmount');
   }
 
   _calculate = (props) => {

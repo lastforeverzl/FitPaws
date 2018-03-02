@@ -113,6 +113,7 @@ class BottomDrawer extends React.Component {
       poopShape: parseInt(poopShape, 10),
       poopColor: parseInt(poopColor, 10),
       feelScale,
+      note: this.state.note,
       creationDate: new Date(Date.now() - time),
     };
     console.log(insertData);

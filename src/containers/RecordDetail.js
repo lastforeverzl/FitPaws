@@ -38,6 +38,7 @@ class RecordDetail extends React.Component {
         poopShape: this.props.navigation.state.params.itemPoopShape,
         poopColor: this.props.navigation.state.params.itemPoopColor,
         feelScale: this.props.navigation.state.params.itemFeelScale,
+        note: this.props.navigation.state.params.itemNote,
         creationDate: this.props.navigation.state.params.itemCreationDate,
       },
       loading: false,
@@ -266,7 +267,7 @@ class RecordDetail extends React.Component {
                   style={{ height: 80 }}
                   editable={false}
                   multiline
-                  placeholder="asdgafhsfgduhfasdhguwehafiuwhefliasufkljahsdnflkjadsniluf"
+                  placeholder={item.note}
                 />
               </View>
             </View>
