@@ -231,10 +231,12 @@ export const deleteRecordFromDb = (id) => {
   };
 };
 
-export const updateDogProfile = (avatar, dogName) => {
+export const updateDogProfile = (avatar, dogName, birthday, inTakeDate) => {
   return {
     type: UPDATE_DOG_PROFILE,
     avatar,
     dogName,
+    birthday,
+    inTakeDate,
   };
 };

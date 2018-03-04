@@ -3,6 +3,8 @@ import { UPDATE_DOG_PROFILE } from '../constants';
 const initialState = {
   avatar: null,
   dogName: '',
+  birthday: '',
+  inTakeDate: '',
 };
 
 export default function profile(state = initialState, action) {
@@ -12,6 +14,8 @@ export default function profile(state = initialState, action) {
         ...state,
         avatar: action.avatar,
         dogName: action.dogName,
+        birthday: action.birthday,
+        inTakeDate: action.inTakeDate,
       };
     default:
       return state;

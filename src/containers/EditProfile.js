@@ -26,7 +26,6 @@ class EditProfile extends React.Component {
   }
 
   _pressDone = () => {
-    console.log('_pressDone');
     this._saveProfile();
     this.props.navigation.goBack();
   }
@@ -45,8 +44,6 @@ class EditProfile extends React.Component {
     };
 
     ImagePicker.showImagePicker(options, (response) => {
-      console.log('Response = ', response);
-
       if (response.didCancel) {
         console.log('User cancelled photo picker');
       } else if (response.error) {
@@ -112,21 +109,21 @@ class EditProfile extends React.Component {
   )
 
   _saveProfile = async () => {
+    const { avatarSource, name, breed, weight, birthday, inTakeDate } = this.state;
     try {
-      await AsyncStorage.setItem(AVATAR_URL_KEY, JSON.stringify(this.state.avatarSource));
-      await AsyncStorage.setItem(PROFILE_DOG_NAME, this.state.name);
-      await AsyncStorage.setItem(PROFILE_DOG_BREED, this.state.breed);
-      await AsyncStorage.setItem(PROFILE_DOG_WEIGHT, this.state.weight);
-      await AsyncStorage.setItem(PROFILE_DOG_BIRTHDAY, this.state.birthday);
-      await AsyncStorage.setItem(PROFILE_DOG_IN_TAKE, this.state.inTakeDate);
+      await AsyncStorage.setItem(AVATAR_URL_KEY, JSON.stringify(avatarSource));
+      await AsyncStorage.setItem(PROFILE_DOG_NAME, name);
+      await AsyncStorage.setItem(PROFILE_DOG_BREED, breed);
+      await AsyncStorage.setItem(PROFILE_DOG_WEIGHT, weight);
+      await AsyncStorage.setItem(PROFILE_DOG_BIRTHDAY, birthday);
+      await AsyncStorage.setItem(PROFILE_DOG_IN_TAKE, inTakeDate);
     } catch (e) {
       console.error('Failed to save profile.');
     }
-    this.props.actions.updateDogProfile(this.state.avatarSource, this.state.name);
+    this.props.actions.updateDogProfile(avatarSource, name, birthday, inTakeDate);
   }
 
   render() {
-    console.log(this.state.avatarSource);
     return (
       <View style={styles.container}>
         <Header
@@ -187,7 +184,7 @@ class EditProfile extends React.Component {
             date={this.state.birthday}
             mode="date"
             placeholder="select date"
-            format="MMM Do YYYY"
+            format="MMM DD YYYY"
             minDate="1920-05-01"
             maxDate="2018-01-01"
             confirmBtnText="Confirm"
@@ -207,7 +204,7 @@ class EditProfile extends React.Component {
             date={this.state.inTakeDate}
             mode="date"
             placeholder="select date"
-            format="MMM Do YYYY"
+            format="MMM DD YYYY"
             minDate="1920-01-01"
             maxDate="2018-01-01"
             confirmBtnText="Confirm"
