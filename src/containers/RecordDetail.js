@@ -1,7 +1,7 @@
 import React from 'react';
-import { Dimensions, StyleSheet, View, Text, TouchableOpacity, Platform, TextInput, Alert } from 'react-native';
+import { Dimensions, StyleSheet, View, Text, TouchableOpacity, Platform, Alert, AsyncStorage } from 'react-native';
 import MapView from 'react-native-maps';
-import { Icon, Button } from 'react-native-elements';
+import { Avatar, Icon, Button } from 'react-native-elements';
 import Interactable from 'react-native-interactable';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -10,12 +10,18 @@ import TimeDistance from '../components/TimeDistance';
 import MyStatusBar from '../components/MyStatusBar';
 import TextDivider from '../components/TextDivider';
 import CustomIcon from '../config/CustomIcon';
-import { FEEL_SCALE, POOP_SHAPE, POOP_COLOR } from '../config/constants';
+import { FEEL_SCALE, POOP_SHAPE, POOP_COLOR, AVATAR_URL_KEY, PROFILE_DOG_NAME } from '../config/constants';
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+let BACK_BUTTON_TOP = 40;
+const isIos = Platform.OS === 'ios';
+const isIphoneX = isIos && Dimensions.get('window').height === 812;
+if (isIos && isIphoneX) {
+  BACK_BUTTON_TOP = 60;
+}
 
 class RecordDetail extends React.Component {
   constructor(props) {
@@ -42,7 +48,29 @@ class RecordDetail extends React.Component {
         creationDate: this.props.navigation.state.params.itemCreationDate,
       },
       loading: false,
+      avatarSource: null,
+      dogName: 'your dog',
     };
+  }
+
+  componentWillMount() {
+    this._loadProfile();
+  }
+
+  _loadProfile = async () => {
+    try {
+      const avatar = await AsyncStorage.getItem(AVATAR_URL_KEY);
+      const dogName = await AsyncStorage.getItem(PROFILE_DOG_NAME);
+
+      if (avatar !== null) {
+        this.setState({ avatarSource: JSON.parse(avatar) });
+      }
+      if (dogName !== null) {
+        this.setState({ dogName });
+      }
+    } catch (e) {
+      console.error('Failed to load profile.');
+    }
   }
 
   _onPress = () => {
@@ -135,7 +163,7 @@ class RecordDetail extends React.Component {
 
   _renderPoopShape = () => {
     const { item } = this.state;
-    if (item.poop) {
+    if (item.poop && item.poopShape > 0) {
       const poopShapeName = POOP_SHAPE[item.poopShape - 1].title;
       const poopShapeIcon = POOP_SHAPE[item.poopShape - 1].icon;
       return (
@@ -156,7 +184,7 @@ class RecordDetail extends React.Component {
 
   _renderPoopColor = () => {
     const { item } = this.state;
-    if (item.poop) {
+    if (item.poop && item.poopColor > 0) {
       const poopShapeColor = POOP_COLOR[item.poopColor - 1].color;
       const poopShapeTitle = POOP_COLOR[item.poopColor - 1].title;
       return (
@@ -176,8 +204,8 @@ class RecordDetail extends React.Component {
     const color = item.poop ? '#34495E' : '#97A6A7';
     return (
       <View style={styles.feelItem}>
-        <CustomIcon name="poopIcon" size={32} color={color} />
-        <Text style={[styles.text, { color }]} >Poop</Text>
+        <CustomIcon name="poopIcon" size={40} color={color} />
+        <Text style={[styles.text, { color }]}>{item.poop ? 'Pooped' : 'No poop'}</Text>
       </View>
     );
   }
@@ -187,14 +215,33 @@ class RecordDetail extends React.Component {
     const color = item.pee ? '#34495E' : '#97A6A7';
     return (
       <View style={styles.feelItem}>
-        <CustomIcon name="peeIcon" size={32} color={color} />
-        <Text style={[styles.text, { color }]} >Pee</Text>
+        <CustomIcon name="peeIcon" size={40} color={color} />
+        <Text style={[styles.text, { color }]}>{item.pee ? 'Peed' : 'No pee'}</Text>
       </View>
     );
   }
 
+  _renderNote = () => {
+    const { item } = this.state;
+    if (item.note !== '') {
+      return (
+        <View style={styles.panel} behavior="padding">
+          <View style={styles.panelTitle}>
+            <CustomIcon name="note" size={24} color="#34495E" />
+            <Text style={[styles.text, styles.panelTitleText]} >Notes</Text>
+          </View>
+          <View style={{ margin: 16 }}>
+            <Text style={styles.noteText}>{item.note}</Text>
+          </View>
+        </View>
+      );
+    }
+    return null;
+  }
+
   render() {
     const { item } = this.state;
+    const routeCoordinates = JSON.parse(item.routeCoordinates);
     return (
       <View style={styles.container}>
         <MyStatusBar />
@@ -206,7 +253,7 @@ class RecordDetail extends React.Component {
             initialRegion={this._initialRegion(item.routeCoordinates)}
             onLayout={() =>
               this._mapRef.fitToCoordinates(
-                JSON.parse(item.routeCoordinates),
+                routeCoordinates,
                 {
                   edgePadding: {
                     top: 100, right: 100, bottom: 300, left: 100,
@@ -216,8 +263,18 @@ class RecordDetail extends React.Component {
               )
             }
           >
+            <MapView.Marker
+              coordinate={routeCoordinates[0]}
+              title="Marker"
+              image={require('../../assets/start.png')}
+            />
+            <MapView.Marker
+              coordinate={routeCoordinates[routeCoordinates.length - 1]}
+              title="Marker"
+              image={require('../../assets/end.png')}
+            />
             <MapView.Polyline
-              coordinates={JSON.parse(item.routeCoordinates)}
+              coordinates={routeCoordinates}
               strokeColor="#34495E"
               strokeWidth={4}
             />
@@ -233,11 +290,14 @@ class RecordDetail extends React.Component {
           >
             <View style={styles.panel}>
               <View style={styles.icon}>
-                <Icon
-                  name="user-circle"
-                  type="font-awesome"
-                  size={40}
-                  color="#34495E"
+                <Avatar
+                  width={40}
+                  height={40}
+                  rounded
+                  icon={{ name: 'account-circle', type: 'MaterialCommunityIcons', color: '#2C3E50', size: 40 }}
+                  overlayContainerStyle={{ backgroundColor: '#FFFFFF' }}
+                  activeOpacity={0.7}
+                  source={this.state.avatarSource}
                 />
               </View>
               <View style={styles.panelHeader}>
@@ -247,8 +307,8 @@ class RecordDetail extends React.Component {
                 <Text style={styles.text}>{this._formatTime(item.creationDate)}</Text>
               </View>
               <TextDivider text="Today's walk" />
-              <TimeDistance time={item.time} distance={item.distance} />
-              <TextDivider text="How Kipper feels after the walk?" />
+              <TimeDistance time={item.time} distance={item.distance} timeUnit="min" />
+              <TextDivider text={`How did ${this.state.dogName} feel after the walk?`} />
               <View style={styles.feelView}>
                 {this._renderFeelScale()}
                 {this._renderPoopStatus()}
@@ -257,29 +317,16 @@ class RecordDetail extends React.Component {
                 {this._renderPeeStatus()}
               </View>
             </View>
-            <View style={styles.panel} behavior="padding">
-              <View style={styles.panelTitle}>
-                <CustomIcon name="note" size={24} color="#34495E" />
-                <Text style={[styles.text, styles.panelTitleText]} >Notes</Text>
-              </View>
-              <View style={styles.textInputField}>
-                <TextInput
-                  style={{ height: 80 }}
-                  editable={false}
-                  multiline
-                  placeholder={item.note}
-                />
-              </View>
-            </View>
+            {this._renderNote()}
             <Button
               loading={this.state.loading}
               disabled={this.state.loading}
-              buttonStyle={{ backgroundColor: '#d6063c' }}
+              buttonStyle={{ backgroundColor: '#E74C3C' }}
               containerViewStyle={{ width: '100%', marginLeft: 0 }}
-              borderRadius={5}
               fontWeight="bold"
               fontSize={14}
               raised
+              rounded
               onPress={() => this._pressDelete(item.id)}
               title="DELETE"
             />
@@ -310,7 +357,7 @@ const styles = StyleSheet.create({
   },
   back: {
     position: 'absolute',
-    top: 40,
+    top: BACK_BUTTON_TOP,
     left: 20,
     zIndex: 1,
   },
@@ -338,7 +385,7 @@ const styles = StyleSheet.create({
     paddingTop: 6,
     paddingBottom: 6,
     backgroundColor: '#ffffff',
-    borderRadius: 10,
+    borderRadius: 6,
     marginBottom: 5,
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 0 },
@@ -393,11 +440,11 @@ const styles = StyleSheet.create({
     height: 32,
     borderRadius: 20,
   },
-  textInputField: {
-    borderColor: '#ECF0F1',
-    borderRadius: 2,
-    borderWidth: 1,
-    margin: 16,
+  noteText: {
+    color: '#34495E',
+    fontSize: 14,
+    fontFamily,
+    fontWeight: 'normal',
   },
 });
 

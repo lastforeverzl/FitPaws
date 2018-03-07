@@ -51,7 +51,7 @@ class History extends React.Component {
     return (
       <View style={styles.container}>
         <Header
-          centerComponent={{ text: 'HISTORY', style: styles.headerText }}
+          centerComponent={{ text: 'History', style: styles.headerText }}
           outerContainerStyles={{ backgroundColor: '#2C3E50', borderBottomWidth: 0 }}
           rightComponent={this._rightComponent()}
           statusBarProps={{ barStyle: 'light-content' }}

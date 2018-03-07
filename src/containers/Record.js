@@ -85,12 +85,14 @@ class Record extends React.Component {
       <ImageBackground source={require('../../assets/terrain-map.png')} style={styles.container}>
         <View style={styles.profileView}>
           <Avatar
-            medium
+            width={72}
+            height={72}
             rounded
-            icon={{ name: 'user', type: 'font-awesome', color: 'black' }}
-            overlayContainerStyle={{ backgroundColor: 'white' }}
-            activeOpacity={0.7}
+            icon={{ name: 'account-circle', type: 'MaterialCommunityIcons', color: '#FFFFFF', size: 72 }}
             source={this.state.avatarSource}
+            onPress={this._pressAvatar}
+            overlayContainerStyle={{ backgroundColor: '#2C3E50' }}
+            activeOpacity={0.7}
           />
           <Text style={styles.text}>
             {this.state.dogName}
@@ -157,7 +159,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#06D6A0',
-    width: 250,
+    width: 200,
   },
 });
 

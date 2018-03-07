@@ -6,7 +6,7 @@ import { FEEL_SCALE, POOP_SHAPE, POOP_COLOR } from '../config/constants';
 
 const HistoryItem = props => (
   <TouchableOpacity activeOpacity={0.5} onPress={props.onPressItem}>
-    <View style={styles.row}>
+    <View style={[styles.row, { marginBottom: 10 }]}>
       <Text style={[styles.text, { color: '#97A6A7' }]}>
         {props.item.creationDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
       </Text>
@@ -52,7 +52,7 @@ const HistoryItem = props => (
       }
     </View>
     <View style={styles.row}>
-      <CustomIcon name="poopIcon" size={12} color="#34495E" />
+      <CustomIcon name="poopIcon" size={24} color="#34495E" />
       {
         props.item.poop ?
           <View style={[styles.row, { marginLeft: 15 }]}>
@@ -69,7 +69,7 @@ const HistoryItem = props => (
                   </Text>
                 </View> :
                 <View style={styles.iconTextContainer}>
-                  <Text style={styles.text}>pooped</Text>
+                  <Text style={styles.text}>Pooped</Text>
                 </View>
             }
             {
@@ -86,14 +86,14 @@ const HistoryItem = props => (
             }
           </View> :
           <View style={{ marginLeft: 15 }}>
-            <Text style={styles.text}>no poop</Text>
+            <Text style={styles.text}>No poop</Text>
           </View>
       }
     </View>
     <View style={styles.row}>
-      <CustomIcon name="peeIcon" size={12} color="#34495E" />
+      <CustomIcon name="peeIcon" size={24} color="#34495E" />
       <View style={{ marginLeft: 15 }}>
-        <Text style={styles.text}>{props.item.pee ? 'peed' : 'no pee'}</Text>
+        <Text style={styles.text}>{props.item.pee ? 'Peed' : 'No pee'}</Text>
       </View>
     </View>
   </TouchableOpacity>
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    margin: 5,
+    margin: 2,
   },
   text: {
     color: '#2C3E50',

@@ -15,7 +15,7 @@ const initialState = {
   poop: false,
   poopShape: 0,
   poopColor: 0,
-  pee: true,
+  pee: false,
   error: '',
   loading: false,
 };

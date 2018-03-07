@@ -19,21 +19,21 @@ const slides = [
   {
     key: 'first-scerrn',
     title: 'Track every walk',
-    text: 'Track every walk with your paw friends and \ntake note of your dog wellness condition.',
+    text: 'Track every walk with your pet and\nkeep an eye on of their health.',
     image: require('../assets/Track-every-walk.png'),
     // image: require('../assets/2.jpg'),
   },
   {
     key: 'second-screen',
     title: 'Review fitness history',
-    text: 'Review quick stats on walk history\nand dog wellness condition.',
+    text: "Review your dog's exercise habits and health.",
     image: require('../assets/review-fitness-history.png'),
     // image: require('../assets/2.jpg'),
   },
   {
     key: 'third-screen',
-    title: 'Remember time together',
-    text: 'Be reminded of not only your walk\ntogether but also time together. ',
+    title: 'Appreciate your time together',
+    text: "Get an idea of how much time you're\nspending with your dog.",
     image: require('../assets/remember-time-together.png'),
     // image: require('../assets/2.jpg'),
   },
@@ -48,10 +48,15 @@ class App extends React.Component {
     };
   }
 
+  async componentWillMount() {
+    const value = await AsyncStorage.getItem(NOT_FIRST_LAUNCH);
+    this.setState({ showRealApp: value });
+  }
+
   componentDidMount() {
     const { actions } = this.props;
     console.log('componentDidMount SplashScreen');
-    AsyncStorage.getItem(NOT_FIRST_LAUNCH).then(value => this.setState({ showRealApp: value }));
+    // AsyncStorage.getItem(NOT_FIRST_LAUNCH).then(value => this.setState({ showRealApp: value }));
     actions.queryFromDatabase();
     SplashScreen.hide();
   }

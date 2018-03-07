@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Icon } from 'react-native-elements';
+import { Icon, Button } from 'react-native-elements';
 
 import * as Actions from '../redux/actions';
 
@@ -61,11 +61,19 @@ class Controller extends React.Component {
             >
               <Icon
                 name="pause"
-                type="material-community"
+                type="MaterialCommunityIcons"
                 size={52}
                 color="#ffffff"
               />
             </TouchableOpacity>
+            {/* <Icon
+              name="pause-circle"
+              type="material-community"
+              size={88}
+              color="#34495E"
+              onPress={() => this.handlePausePress(actions, interval)}
+              component={TouchableOpacity}
+            /> */}
           </View> :
           <View style={styles.controlView}>
             <TouchableOpacity
@@ -74,12 +82,20 @@ class Controller extends React.Component {
               activeOpacity={0.8}
             >
               <Icon
-                name="play"
-                type="material-community"
+                name="play-arrow"
+                type="MaterialCommunityIcons"
                 size={52}
                 color="#ffffff"
               />
             </TouchableOpacity>
+            {/* <Icon
+              name="play-circle"
+              type="material-community"
+              size={88}
+              color="#2ECC71"
+              onPress={() => this.handleStartPress(actions, interval)}
+              component={TouchableOpacity}
+            /> */}
             <TouchableOpacity
               style={styles.stopButton}
               onPress={() => this.handleStopPress(actions)}
@@ -87,11 +103,19 @@ class Controller extends React.Component {
             >
               <Icon
                 name="stop"
-                type="material-community"
+                type="MaterialCommunityIcons"
                 size={52}
                 color="#ffffff"
               />
             </TouchableOpacity>
+            {/* <Icon
+              name="stop-circle"
+              type="material-community"
+              size={88}
+              color="#E74C3C"
+              onPress={() => this.handleStopPress(actions)}
+              component={TouchableOpacity}
+            /> */}
           </View>
         }
       </View>
@@ -105,7 +129,7 @@ const styles = {
     backgroundColor: 'transparent',
     bottom: 36,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
   },
   pauseButton: {
     alignItems: 'center',
@@ -122,8 +146,8 @@ const styles = {
     height: 72,
     backgroundColor: '#2ECC71',
     borderRadius: 72,
-    marginLeft: 16,
-    marginRight: 16,
+    // marginLeft: 16,
+    // marginRight: 16,
   },
   stopButton: {
     alignItems: 'center',
@@ -132,8 +156,8 @@ const styles = {
     height: 72,
     backgroundColor: '#E74C3C',
     borderRadius: 72,
-    marginLeft: 16,
-    marginRight: 16,
+    // marginLeft: 16,
+    // marginRight: 16,
   },
 };
 

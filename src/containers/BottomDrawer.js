@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, Text, Dimensions, Animated, Platform } from 'react-native';
+import { StyleSheet, View, Text, Dimensions, Animated, Platform, AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Icon, Button } from 'react-native-elements';
+import { Avatar, Icon, Button } from 'react-native-elements';
 import Interactable from 'react-native-interactable';
 import Collapsible from 'react-native-collapsible';
 import uuid from 'uuid';
@@ -16,6 +16,7 @@ import PoopShape from './PoopShape';
 import PoopColor from './PoopColor';
 import ToggleButton from './ToggleButton';
 import TextField from './TextField';
+import { AVATAR_URL_KEY, PROFILE_DOG_NAME } from '../config/constants';
 
 const Screen = {
   width: Dimensions.get('window').width,
@@ -45,8 +46,30 @@ class BottomDrawer extends React.Component {
       note: '',
       timeUnit: 'min',
       loading: false,
+      avatarSource: null,
+      dogName: 'your dog',
     };
     this._interactable = this._interactable.bind(this);
+  }
+
+  componentWillMount() {
+    this._loadProfile();
+  }
+
+  _loadProfile = async () => {
+    try {
+      const avatar = await AsyncStorage.getItem(AVATAR_URL_KEY);
+      const dogName = await AsyncStorage.getItem(PROFILE_DOG_NAME);
+
+      if (avatar !== null) {
+        this.setState({ avatarSource: JSON.parse(avatar) });
+      }
+      if (dogName !== null) {
+        this.setState({ dogName });
+      }
+    } catch (e) {
+      console.error('Failed to load profile.');
+    }
   }
 
   _getCurrentTime = () => {
@@ -181,11 +204,14 @@ class BottomDrawer extends React.Component {
           >
             <View style={styles.panel}>
               <View style={styles.icon}>
-                <Icon
-                  name="user-circle"
-                  type="font-awesome"
-                  size={40}
-                  color="#34495E"
+                <Avatar
+                  width={40}
+                  height={40}
+                  rounded
+                  icon={{ name: 'account-circle', type: 'MaterialCommunityIcons', color: '#2C3E50', size: 40 }}
+                  overlayContainerStyle={{ backgroundColor: '#FFFFFF' }}
+                  activeOpacity={0.7}
+                  source={this.state.avatarSource}
                 />
               </View>
               <View style={styles.panelHeader}>
@@ -200,15 +226,15 @@ class BottomDrawer extends React.Component {
                 distance={distanceTravelled}
                 timeUnit={this.state.timeUnit}
               />
-              <TextDivider text="How Kipper feels after the walk?" />
+              <TextDivider text={`How did ${this.state.dogName} feel after the walk?`} />
               <FeelScale />
             </View>
             <View style={styles.panel}>
               <View style={styles.panelTitle}>
-                <CustomIcon name="poopIcon" size={24} color="#34495E" />
+                <CustomIcon name="poopIcon" size={32} color="#34495E" />
                 <Text style={[styles.text, styles.panelTitleText]} >Poop</Text>
               </View>
-              <TextDivider text="Did Kipper poop?" />
+              <TextDivider text={`Did ${this.state.dogName} poop?`} />
               <ToggleButton onPressButton={this._poopOnClick} />
               <Collapsible collapsed={this.state.isCollapsed}>
                 <TextDivider text="What was the shape like?" />
@@ -221,10 +247,10 @@ class BottomDrawer extends React.Component {
             </View>
             <View style={styles.panel}>
               <View style={styles.panelTitle}>
-                <CustomIcon name="peeIcon" size={24} color="#34495E" />
+                <CustomIcon name="peeIcon" size={32} color="#34495E" />
                 <Text style={[styles.text, styles.panelTitleText]} >Pee</Text>
               </View>
-              <TextDivider text="Did Kipper pee?" />
+              <TextDivider text={`Did ${this.state.dogName} pee?`} />
               <ToggleButton onPressButton={this._peeOnClick} />
             </View>
             <View style={styles.panel}>
@@ -243,10 +269,10 @@ class BottomDrawer extends React.Component {
               disabled={this.state.loading}
               buttonStyle={styles.button}
               containerViewStyle={{ width: '100%', marginLeft: 0 }}
-              borderRadius={5}
               fontWeight="bold"
               fontSize={14}
               raised
+              rounded
               onPress={this._pressSave}
               title="SAVE"
             />
@@ -290,7 +316,7 @@ const styles = StyleSheet.create({
     paddingTop: 6,
     paddingBottom: 6,
     backgroundColor: '#ffffff',
-    borderRadius: 10,
+    borderRadius: 6,
     marginBottom: 5,
     shadowColor: '#000000',
     shadowOffset: { width: 0, height: 0 },

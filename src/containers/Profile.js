@@ -40,24 +40,30 @@ class Profile extends React.Component {
   }
 
   _callDaysDiff = () => {
-    const starts = moment(new Date(this.state.inTakeDate));
-    const ends = moment();
-    return ends.diff(starts, 'days');
+    if (this.state.inTakeDate !== '') {
+      console.log(this.state.inTakeDate);
+      const starts = moment(new Date(this.state.inTakeDate));
+      const ends = moment();
+      return ends.diff(starts, 'days');
+    }
+    return 0;
   }
 
   _calDuration = () => {
-    const starts = moment(new Date(this.state.inTakeDate));
-    const ends = moment();
-    const diff = moment.preciseDiff(starts, ends, true);
-    const duration = {
-      year: diff.years,
-      months: diff.months,
-      days: diff.days,
-      hours: diff.hours,
-      minutes: diff.minutes,
-      seconds: diff.seconds,
-    };
-    this.setState({ duration });
+    if (this.state.inTakeDate !== '') {
+      const starts = moment(new Date(this.state.inTakeDate));
+      const ends = moment();
+      const diff = moment.preciseDiff(starts, ends, true);
+      const duration = {
+        year: diff.years,
+        months: diff.months,
+        days: diff.days,
+        hours: diff.hours,
+        minutes: diff.minutes,
+        seconds: diff.seconds,
+      };
+      this.setState({ duration });
+    }
   }
 
   _loadProfile = async () => {
@@ -148,7 +154,7 @@ const fontFamily = Platform.OS === 'ios' ? 'HelveticaNeue' : 'monospace';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#FFFFFF',
   },
   headerText: {
     color: '#FFFFFF',

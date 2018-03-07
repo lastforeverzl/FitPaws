@@ -64,7 +64,7 @@ class EditProfile extends React.Component {
     <TouchableOpacity
       onPress={this._pressCancel}
     >
-      <Text style={{ color: '#2C3E50' }}>Cancel</Text>
+      <Text style={{ color: '#FFFFFF' }}>Cancel</Text>
     </TouchableOpacity>
   )
 
@@ -104,7 +104,7 @@ class EditProfile extends React.Component {
     <TouchableOpacity
       onPress={this._pressDone}
     >
-      <Text style={{ color: '#2C3E50', fontWeight: 'bold' }}>Done</Text>
+      <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>Done</Text>
     </TouchableOpacity>
   )
 
@@ -129,21 +129,22 @@ class EditProfile extends React.Component {
         <Header
           centerComponent={{ text: 'Edit Profile', style: styles.headerText }}
           leftComponent={this._leftComponent()}
-          outerContainerStyles={{ backgroundColor: '#FFFFFF', borderBottomWidth: 0 }}
+          outerContainerStyles={{ backgroundColor: '#2C3E50', borderBottomWidth: 0 }}
           rightComponent={this._rightComponent()}
-          statusBarProps={{ barStyle: 'dark-content' }}
         />
         <View style={styles.section}>
           <Text style={styles.text}>Dog Profile</Text>
         </View>
-        <View style={[styles.editSection, { height: 60 }]}>
+        <View style={[styles.editSection, { height: 80 }]}>
           <Text style={styles.text}>Picture</Text>
           <Avatar
-            small
+            width={56}
+            height={56}
             rounded
-            icon={{ name: 'account', type: 'material-community', size: 24 }}
+            icon={{ name: 'account-circle', type: 'MaterialCommunityIcons', color: '#ECF0F1', size: 56 }}
             source={this.state.avatarSource}
             onPress={this._pressAvatar}
+            overlayContainerStyle={{ backgroundColor: '#FFFFFF' }}
             activeOpacity={0.7}
           />
         </View>
@@ -198,7 +199,7 @@ class EditProfile extends React.Component {
           />
         </View>
         <View style={styles.editSection}>
-          <Text style={styles.text}>Dog in-take Date</Text>
+          <Text style={styles.text}>Dog In-take Date</Text>
           <DatePicker
             style={{ width: 150, borderColor: '#FFFFFF' }}
             date={this.state.inTakeDate}
@@ -249,7 +250,7 @@ const styles = StyleSheet.create({
     borderColor: '#E5E5E5',
   },
   headerText: {
-    color: '#2C3E50',
+    color: '#FFFFFF',
     fontFamily,
     fontWeight: '500',
     fontSize: 20,

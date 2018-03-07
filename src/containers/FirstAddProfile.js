@@ -127,7 +127,7 @@ export default class FirstAddProfile extends React.Component {
             date={this.state.birthday}
             mode="date"
             placeholder="select date"
-            format="MMM Do YYYY"
+            format="MMM DD YYYY"
             minDate="1920-05-01"
             maxDate="2018-01-01"
             confirmBtnText="Confirm"
@@ -147,7 +147,7 @@ export default class FirstAddProfile extends React.Component {
             date={this.state.inTakeDate}
             mode="date"
             placeholder="select date"
-            format="MMM Do YYYY"
+            format="MMM DD YYYY"
             minDate="1920-01-01"
             maxDate="2018-01-01"
             confirmBtnText="Confirm"

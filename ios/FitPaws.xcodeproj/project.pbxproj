@@ -51,6 +51,7 @@
 		8C38AC6BA2954537B6D58A1B /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2B1412384C404C67B0F7D764 /* icomoon.ttf */; };
 		9449A624A47F46D89E5AE6FC /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D3D442E036FD456F963A20DF /* Octicons.ttf */; };
 		9E359328E9384A8ABB882491 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 33F0DE1B835A4475AB92754C /* SimpleLineIcons.ttf */; };
+		AB071906204CF4A000E94EF0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB071905204CF4A000E94EF0 /* LaunchScreen.xib */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		C44BCF3FFC974BFDB915CD78 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D353158EBB24732B9E6D790 /* libz.tbd */; };
 		DE1A9C2C33A5478FB29F2BE2 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CFC61E22749A4809AC22EFB6 /* libBVLinearGradient.a */; };
@@ -438,6 +439,7 @@
 		97FB9D2FCDD349D5853659ED /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		A518644871E945B7983CF12E /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		A9EADC6537BD41469513E70D /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		AB071905204CF4A000E94EF0 /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		ABDEFC44201590AE004D5C5B /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		ABDEFC45201590AE004D5C5B /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
 		ABDEFC46201590AE004D5C5B /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
@@ -631,6 +633,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				AB071905204CF4A000E94EF0 /* LaunchScreen.xib */,
 			);
 			name = FitPaws;
 			sourceTree = "<group>";
@@ -939,6 +942,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = XMCKEVED94;
+						ProvisioningStyle = Manual;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1391,6 +1395,7 @@
 				03A03495B9DC47EE83BCC679 /* MaterialCommunityIcons.ttf in Resources */,
 				6527B79F91B44280A59B3604 /* MaterialIcons.ttf in Resources */,
 				9449A624A47F46D89E5AE6FC /* Octicons.ttf in Resources */,
+				AB071906204CF4A000E94EF0 /* LaunchScreen.xib in Resources */,
 				9E359328E9384A8ABB882491 /* SimpleLineIcons.ttf in Resources */,
 				36CEB065F5B4466997B0701A /* Zocial.ttf in Resources */,
 				31A64AFF39FE4B3D9FE6699D /* start_walk.ttf in Resources */,
@@ -1568,7 +1573,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Lei Zhang (SCQ98554JJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Lei Zhang (SCQ98554JJ)";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = XMCKEVED94;
@@ -1589,7 +1596,10 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.zackyzhang.fitpaws;
 				PRODUCT_NAME = FitPaws;
+				PROVISIONING_PROFILE = "53337620-2a7b-4128-84b3-3f77f7dd83d6";
+				PROVISIONING_PROFILE_SPECIFIER = FitPaw_developement;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1598,7 +1608,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Lei Zhang (XMCKEVED94)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Lei Zhang (XMCKEVED94)";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XMCKEVED94;
 				HEADER_SEARCH_PATHS = (
@@ -1618,7 +1630,10 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.zackyzhang.fitpaws;
 				PRODUCT_NAME = FitPaws;
+				PROVISIONING_PROFILE = "383571e8-325f-480c-b062-f7a6029f99ee";
+				PROVISIONING_PROFILE_SPECIFIER = FitPaws;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

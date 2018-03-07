@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Dimensions } from 'react-native';
+import { View, Dimensions, Image } from 'react-native';
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
 import { bindActionCreators } from 'redux';
@@ -61,21 +61,34 @@ class Map extends React.Component {
     }
   }
 
+  _renderStartMarker = () => {
+    if (this.props.panelVisible) {
+      return (
+        <MapView.Marker
+          coordinate={this.state.currentPosition}
+          title="Marker"
+          image={require('../../assets/start.png')}
+        />
+      );
+    }
+    return (
+      <MapView.Marker
+        coordinate={this.state.currentPosition}
+        title="Marker"
+        image={require('../../assets/pin.png')}
+        centerOffset={{ x: 0, y: -16 }}
+      />
+    );
+  }
+
   _renderFinalMarker = () => {
     if (this.props.panelVisible) {
       return (
         <MapView.Marker
           coordinate={this.state.finalPosition}
           title="Marker"
-        >
-          <View style={{ marginBottom: 25 }}>
-            <CustomIcon
-              name="pin"
-              size={32}
-              color="#34495E"
-            />
-          </View>
-        </MapView.Marker>
+          image={require('../../assets/end.png')}
+        />
       );
     }
     return null;
@@ -97,18 +110,7 @@ class Map extends React.Component {
           region={region}
           showsUserLocation={!this.props.panelVisible}
         >
-          <MapView.Marker
-            coordinate={this.state.currentPosition}
-            title="Marker"
-          >
-            <View style={{ marginBottom: 25 }}>
-              <CustomIcon
-                name="pin"
-                size={32}
-                color="#34495E"
-              />
-            </View>
-          </MapView.Marker>
+          {this._renderStartMarker()}
           {this._renderFinalMarker()}
           <MapView.Polyline
             coordinates={routeCoordinates}

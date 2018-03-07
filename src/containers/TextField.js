@@ -5,10 +5,15 @@ const TextField = (props) => {
   return (
     <View style={styles.container}>
       <TextInput
+        autoCorrect={false}
+        blurOnSubmit
         editable
+        multiline
         onFocus={() => props.inputOnFocus()}
         onChangeText={text => props.text(text)}
         value={props.value}
+        style={{ padding: 10 }}
+        returnKeyType="done"
       />
     </View>
   );
