@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import { View, StyleSheet, Platform } from 'react-native';
 import { Header } from 'react-native-elements';
 import uuid from 'uuid';
 import { connect } from 'react-redux';
@@ -39,22 +39,12 @@ class History extends React.Component {
     this.props.actions.insertRecordToDb(test);
   }
 
-  _rightComponent = () => (
-    <TouchableOpacity
-      onPress={this._addTestData}
-    >
-      <Text style={{ color: 'skyblue' }}>ADD</Text>
-    </TouchableOpacity>
-  )
-
   render() {
     return (
       <View style={styles.container}>
         <Header
           centerComponent={{ text: 'History', style: styles.headerText }}
           outerContainerStyles={{ backgroundColor: '#2C3E50', borderBottomWidth: 0 }}
-          rightComponent={this._rightComponent()}
-          statusBarProps={{ barStyle: 'light-content' }}
         />
         <HistoryTab screenProps={{ navigation: this.props.navigation }} />
       </View>

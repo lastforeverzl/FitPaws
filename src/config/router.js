@@ -34,6 +34,7 @@ export const Tabs = TabNavigator({
     },
     activeTintColor: '#2C3E50',
   },
+  lazy: false,
   navigationOptions: ({ navigation }) => ({
     tabBarIcon: ({ tintColor }) => {
       const { routeName } = navigation.state;

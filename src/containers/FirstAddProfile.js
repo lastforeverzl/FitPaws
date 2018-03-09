@@ -37,8 +37,8 @@ export default class FirstAddProfile extends React.Component {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = { uri: response.uri };
-        // this._saveAvatar(source);
+        // const source = { uri: response.uri };
+        const source = { uri: 'data:image/jpeg;base64,' + response.data };
         this.setState({
           avatarSource: source,
         });
@@ -97,6 +97,7 @@ export default class FirstAddProfile extends React.Component {
             editable
             onChangeText={name => this.setState({ name })}
             value={this.state.name}
+            placeholder="Enter dog name"
           />
         </View>
         <View style={styles.editSection}>
@@ -106,6 +107,7 @@ export default class FirstAddProfile extends React.Component {
             editable
             onChangeText={breed => this.setState({ breed })}
             value={this.state.breed}
+            placeholder="Enter dog breed"
           />
         </View>
         <View style={styles.editSection}>
@@ -117,6 +119,7 @@ export default class FirstAddProfile extends React.Component {
               editable
               onChangeText={weight => this.setState({ weight })}
               value={this.state.weight}
+              placeholder="Enter dog weight"
             />
           </View>
         </View>
@@ -126,7 +129,7 @@ export default class FirstAddProfile extends React.Component {
             style={{ width: 150, borderColor: '#FFFFFF' }}
             date={this.state.birthday}
             mode="date"
-            placeholder="select date"
+            placeholder="Select date"
             format="MMM DD YYYY"
             minDate="1920-05-01"
             maxDate="2018-01-01"
@@ -137,6 +140,14 @@ export default class FirstAddProfile extends React.Component {
             customStyles={{
               dateInput: { borderWidth: 0, alignItems: 'flex-end' },
               dateTouchBody: { height: 0 },
+              btnCancel: {
+                padding: 0,
+                paddingLeft: 20,
+              },
+              btnConfirm: {
+                padding: 0,
+                paddingRight: 20,
+              },
             }}
           />
         </View>
@@ -146,7 +157,7 @@ export default class FirstAddProfile extends React.Component {
             style={{ width: 150, borderColor: '#FFFFFF' }}
             date={this.state.inTakeDate}
             mode="date"
-            placeholder="select date"
+            placeholder="Select date"
             format="MMM DD YYYY"
             minDate="1920-01-01"
             maxDate="2018-01-01"
@@ -157,6 +168,14 @@ export default class FirstAddProfile extends React.Component {
             customStyles={{
               dateInput: { borderWidth: 0, alignItems: 'flex-end' },
               dateTouchBody: { height: 0 },
+              btnCancel: {
+                padding: 0,
+                paddingLeft: 20,
+              },
+              btnConfirm: {
+                padding: 0,
+                paddingRight: 20,
+              },
             }}
           />
         </View>

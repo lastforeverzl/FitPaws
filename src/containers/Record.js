@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, AsyncStorage, ImageBackground } from 'react-native';
+import { Text, View, StyleSheet, AsyncStorage, ImageBackground, StatusBar } from 'react-native';
 import { Avatar, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { AVATAR_URL_KEY, PROFILE_DOG_NAME } from '../config/constants';
@@ -83,6 +83,7 @@ class Record extends React.Component {
   render() {
     return (
       <ImageBackground source={require('../../assets/terrain-map.png')} style={styles.container}>
+        <StatusBar barStyle="light-content" />
         <View style={styles.profileView}>
           <Avatar
             width={72}

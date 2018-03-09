@@ -52,6 +52,8 @@
 		9449A624A47F46D89E5AE6FC /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D3D442E036FD456F963A20DF /* Octicons.ttf */; };
 		9E359328E9384A8ABB882491 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 33F0DE1B835A4475AB92754C /* SimpleLineIcons.ttf */; };
 		AB071906204CF4A000E94EF0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB071905204CF4A000E94EF0 /* LaunchScreen.xib */; };
+		AB31681E204FAE9800B8D137 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = AB31681D204FAE9800B8D137 /* main.jsbundle */; };
+		AB316820204FAEB400B8D137 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = AB31681F204FAEB400B8D137 /* assets */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		C44BCF3FFC974BFDB915CD78 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D353158EBB24732B9E6D790 /* libz.tbd */; };
 		DE1A9C2C33A5478FB29F2BE2 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CFC61E22749A4809AC22EFB6 /* libBVLinearGradient.a */; };
@@ -394,7 +396,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
 		00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTGeolocation.xcodeproj; path = "../node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj"; sourceTree = "<group>"; };
 		00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
@@ -440,6 +441,8 @@
 		A518644871E945B7983CF12E /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		A9EADC6537BD41469513E70D /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		AB071905204CF4A000E94EF0 /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		AB31681D204FAE9800B8D137 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		AB31681F204FAEB400B8D137 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		ABDEFC44201590AE004D5C5B /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		ABDEFC45201590AE004D5C5B /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
 		ABDEFC46201590AE004D5C5B /* Entypo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Entypo.ttf; sourceTree = "<group>"; };
@@ -627,7 +630,7 @@
 		13B07FAE1A68108700A75B9A /* FitPaws */ = {
 			isa = PBXGroup;
 			children = (
-				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
+				AB31681D204FAE9800B8D137 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -727,6 +730,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				AB31681F204FAEB400B8D137 /* assets */,
 				ABDEFC43201590AE004D5C5B /* Fonts */,
 				13B07FAE1A68108700A75B9A /* FitPaws */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -1387,11 +1391,13 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				792770DA7DD14157901B9354 /* Entypo.ttf in Resources */,
+				AB316820204FAEB400B8D137 /* assets in Resources */,
 				582800D265AC4FB58EBD3D23 /* EvilIcons.ttf in Resources */,
 				E3BFA215F1494FB0B9A0AEFD /* Feather.ttf in Resources */,
 				1A2DC92A332F478AB1BC56E8 /* FontAwesome.ttf in Resources */,
 				6B2DC82AFA8846E0AE1DF8D7 /* Foundation.ttf in Resources */,
 				F498115E04F1487BA13C0B71 /* Ionicons.ttf in Resources */,
+				AB31681E204FAE9800B8D137 /* main.jsbundle in Resources */,
 				03A03495B9DC47EE83BCC679 /* MaterialCommunityIcons.ttf in Resources */,
 				6527B79F91B44280A59B3604 /* MaterialIcons.ttf in Resources */,
 				9449A624A47F46D89E5AE6FC /* Octicons.ttf in Resources */,

@@ -40,7 +40,7 @@ class Controller extends React.Component {
       },
       (error) => { alert(JSON.stringify(error)); },
       {
-        enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 15,
+        enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10,
       },
     );
   }
@@ -66,14 +66,6 @@ class Controller extends React.Component {
                 color="#ffffff"
               />
             </TouchableOpacity>
-            {/* <Icon
-              name="pause-circle"
-              type="material-community"
-              size={88}
-              color="#34495E"
-              onPress={() => this.handlePausePress(actions, interval)}
-              component={TouchableOpacity}
-            /> */}
           </View> :
           <View style={styles.controlView}>
             <TouchableOpacity
@@ -88,14 +80,6 @@ class Controller extends React.Component {
                 color="#ffffff"
               />
             </TouchableOpacity>
-            {/* <Icon
-              name="play-circle"
-              type="material-community"
-              size={88}
-              color="#2ECC71"
-              onPress={() => this.handleStartPress(actions, interval)}
-              component={TouchableOpacity}
-            /> */}
             <TouchableOpacity
               style={styles.stopButton}
               onPress={() => this.handleStopPress(actions)}
@@ -108,14 +92,6 @@ class Controller extends React.Component {
                 color="#ffffff"
               />
             </TouchableOpacity>
-            {/* <Icon
-              name="stop-circle"
-              type="material-community"
-              size={88}
-              color="#E74C3C"
-              onPress={() => this.handleStopPress(actions)}
-              component={TouchableOpacity}
-            /> */}
           </View>
         }
       </View>
@@ -146,8 +122,6 @@ const styles = {
     height: 72,
     backgroundColor: '#2ECC71',
     borderRadius: 72,
-    // marginLeft: 16,
-    // marginRight: 16,
   },
   stopButton: {
     alignItems: 'center',
@@ -156,8 +130,6 @@ const styles = {
     height: 72,
     backgroundColor: '#E74C3C',
     borderRadius: 72,
-    // marginLeft: 16,
-    // marginRight: 16,
   },
 };
 

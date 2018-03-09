@@ -57,7 +57,7 @@ export const deleteAllRecords = () => new Promise((resolve, reject) => {
 
 export const queryAllRecords = () => new Promise((resolve, reject) => {
   Realm.open(databaseOptions).then((realm) => {
-    const allRecords = realm.objects(RECORD_SCHEMA).sorted('creationDate', false);
+    const allRecords = realm.objects(RECORD_SCHEMA).sorted('creationDate', true);
     resolve(allRecords);
   }).catch(error => reject(error));
 });

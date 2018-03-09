@@ -19,7 +19,7 @@ const slides = [
   {
     key: 'first-scerrn',
     title: 'Track every walk',
-    text: 'Track every walk with your pet and\nkeep an eye on of their health.',
+    text: 'Track every walk with your pet and\nkeep an eye on their health.',
     image: require('../assets/Track-every-walk.png'),
     // image: require('../assets/2.jpg'),
   },
@@ -48,15 +48,10 @@ class App extends React.Component {
     };
   }
 
-  async componentWillMount() {
-    const value = await AsyncStorage.getItem(NOT_FIRST_LAUNCH);
-    this.setState({ showRealApp: value });
-  }
-
   componentDidMount() {
     const { actions } = this.props;
     console.log('componentDidMount SplashScreen');
-    // AsyncStorage.getItem(NOT_FIRST_LAUNCH).then(value => this.setState({ showRealApp: value }));
+    AsyncStorage.getItem(NOT_FIRST_LAUNCH).then(value => this.setState({ showRealApp: value }));
     actions.queryFromDatabase();
     SplashScreen.hide();
   }

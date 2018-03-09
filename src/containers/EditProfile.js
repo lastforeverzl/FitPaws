@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Platform, TouchableOpacity, Text, TextInput, AsyncStorage, StatusBar } from 'react-native';
+import { View, StyleSheet, Platform, TouchableOpacity, Text, TextInput, AsyncStorage } from 'react-native';
 import { Avatar, Header } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker';
 import ImagePicker from 'react-native-image-picker';
@@ -51,8 +51,8 @@ class EditProfile extends React.Component {
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton);
       } else {
-        const source = { uri: response.uri };
-        // this._saveAvatar(source);
+        // const source = { uri: response.uri };
+        const source = { uri: 'data:image/jpeg;base64,' + response.data };
         this.setState({
           avatarSource: source,
         });
@@ -155,6 +155,7 @@ class EditProfile extends React.Component {
             editable
             onChangeText={name => this.setState({ name })}
             value={this.state.name}
+            placeholder="Enter dog name"
           />
         </View>
         <View style={styles.editSection}>
@@ -164,6 +165,7 @@ class EditProfile extends React.Component {
             editable
             onChangeText={breed => this.setState({ breed })}
             value={this.state.breed}
+            placeholder="Enter dog breed"
           />
         </View>
         <View style={styles.editSection}>
@@ -175,6 +177,7 @@ class EditProfile extends React.Component {
               editable
               onChangeText={weight => this.setState({ weight })}
               value={this.state.weight}
+              placeholder="Enter dog weight"
             />
           </View>
         </View>
@@ -184,7 +187,7 @@ class EditProfile extends React.Component {
             style={{ width: 150, borderColor: '#FFFFFF' }}
             date={this.state.birthday}
             mode="date"
-            placeholder="select date"
+            placeholder="Select date"
             format="MMM DD YYYY"
             minDate="1920-05-01"
             maxDate="2018-01-01"
@@ -195,6 +198,14 @@ class EditProfile extends React.Component {
             customStyles={{
               dateInput: { borderWidth: 0, alignItems: 'flex-end' },
               dateTouchBody: { height: 0 },
+              btnCancel: {
+                padding: 0,
+                paddingLeft: 20,
+              },
+              btnConfirm: {
+                padding: 0,
+                paddingRight: 20,
+              },
             }}
           />
         </View>
@@ -204,7 +215,7 @@ class EditProfile extends React.Component {
             style={{ width: 150, borderColor: '#FFFFFF' }}
             date={this.state.inTakeDate}
             mode="date"
-            placeholder="select date"
+            placeholder="Select date"
             format="MMM DD YYYY"
             minDate="1920-01-01"
             maxDate="2018-01-01"
@@ -215,6 +226,14 @@ class EditProfile extends React.Component {
             customStyles={{
               dateInput: { borderWidth: 0, alignItems: 'flex-end' },
               dateTouchBody: { height: 0 },
+              btnCancel: {
+                padding: 0,
+                paddingLeft: 20,
+              },
+              btnConfirm: {
+                padding: 0,
+                paddingRight: 20,
+              },
             }}
           />
         </View>
@@ -231,7 +250,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   section: {
-    height: 32,
+    height: 34,
     backgroundColor: '#F4F6F6',
     paddingVertical: 8,
     paddingHorizontal: 16,
