@@ -2,47 +2,85 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Icon, Button } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
+import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
 
 import * as Actions from '../redux/actions';
 
 class Controller extends React.Component {
   componentDidMount() {
     this.props.actions.startTimer();
-    this.startWatch();
+
+    BackgroundGeolocation.configure({
+      desiredAccuracy: 10,
+      distanceFilter: 10,
+      interval: 20000,
+    });
+
+    BackgroundGeolocation.on('start', () => {
+      console.log('[DEBUG] BackgroundGeolocation has been started');
+    });
+
+    BackgroundGeolocation.on('stop', () => {
+      console.log('[DEBUG] BackgroundGeolocation has been stopped');
+    });
+
+    BackgroundGeolocation.on('error', ({ message }) => {
+      console.log('[DEBUG] BackgroundGeolocation error', message);
+      // Alert.alert('BackgroundGeolocation error', message);
+    });
+
+    BackgroundGeolocation.on('location', (location) => {
+      console.log('[DEBUG] BackgroundGeolocation location', location);
+      BackgroundGeolocation.startTask((taskKey) => {
+        this.props.actions.updateLocation(location, this.props.prevLatLng);
+        BackgroundGeolocation.endTask(taskKey);
+      });
+    });
+
+    BackgroundGeolocation.on('foreground', () => {
+      console.log('[INFO] App is in foreground');
+    });
+
+    BackgroundGeolocation.on('background', () => {
+      console.log('[INFO] App is in background');
+    });
+
+    BackgroundGeolocation.checkStatus(({ isRunning }) => {
+      console.log(isRunning);
+      if (!isRunning) {
+        BackgroundGeolocation.start();
+      }
+    });
   }
 
   componentWillUnmount() {
     this.props.actions.resetTimer();
-    navigator.geolocation.clearWatch(this.watchID);
+    BackgroundGeolocation.events.forEach(event => BackgroundGeolocation.removeAllListeners(event));
   }
-
-  watchID: ?number = null;
 
   handlePausePress = (actions, interval) => {
     actions.stopTimer(interval);
-    navigator.geolocation.clearWatch(this.watchID);
+    BackgroundGeolocation.checkStatus(({ isRunning }) => {
+      console.log(isRunning);
+      if (isRunning) {
+        BackgroundGeolocation.stop();
+      }
+    });
   }
 
   handleStartPress = (actions, interval) => {
     actions.startTimer(interval);
-    this.startWatch();
+    BackgroundGeolocation.checkStatus(({ isRunning }) => {
+      console.log(isRunning);
+      if (!isRunning) {
+        BackgroundGeolocation.start();
+      }
+    });
   }
 
   handleStopPress = (actions) => {
     actions.showSlidingPanel();
-  }
-
-  startWatch = () => {
-    this.watchID = navigator.geolocation.watchPosition(
-      (position) => {
-        this.props.actions.updateLocation(position, this.props.prevLatLng);
-      },
-      (error) => { alert(JSON.stringify(error)); },
-      {
-        enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10,
-      },
-    );
   }
 
   render() {
@@ -112,7 +150,7 @@ const styles = {
     justifyContent: 'center',
     width: 72,
     height: 72,
-    backgroundColor: '#34495E',
+    backgroundColor: '#2C3E50',
     borderRadius: 72,
   },
   playButton: {

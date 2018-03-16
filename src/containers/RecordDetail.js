@@ -275,7 +275,7 @@ class RecordDetail extends React.Component {
             />
             <MapView.Polyline
               coordinates={routeCoordinates}
-              strokeColor="#34495E"
+              strokeColor="#2C3E50"
               strokeWidth={4}
             />
           </MapView>
@@ -409,7 +409,7 @@ const styles = StyleSheet.create({
     marginLeft: 16,
   },
   panelTitleText: {
-    color: '#34495E',
+    color: '#2C3E50',
     fontWeight: '500',
     paddingLeft: 10,
   },
@@ -441,7 +441,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   noteText: {
-    color: '#34495E',
+    color: '#2C3E50',
     fontSize: 14,
     fontFamily,
     fontWeight: 'normal',

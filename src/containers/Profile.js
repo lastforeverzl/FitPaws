@@ -90,7 +90,7 @@ class Profile extends React.Component {
       type="MaterialCommunityIcons"
       size={32}
       color="#FFFFFF"
-      containerStyle={{ marginTop: 30 }}
+      containerStyle={{ marginTop: Platform.OS === 'ios' ? 30 : 0 }}
       onPress={() => this.props.navigation.navigate('EditProfile')}
     />
   )

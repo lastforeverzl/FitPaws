@@ -61,9 +61,9 @@ export function resetTimer() {
   };
 }
 
-export function updateLocation(position, prevLatLng) {
-  const newLatLngs = { latitude: position.coords.latitude, longitude: position.coords.longitude };
-  const positionLatLngs = pick(position.coords, ['latitude', 'longitude']);
+export function updateLocation(location, prevLatLng) {
+  const newLatLngs = { latitude: location.latitude, longitude: location.longitude };
+  const positionLatLngs = pick(location, ['latitude', 'longitude']);
   const calcDistance = (haversine(prevLatLng, newLatLngs, { unit: 'mile' }) || 0);
   return {
     type: UPDATE_LOCATION,

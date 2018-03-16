@@ -1,14 +1,13 @@
 import React from 'react';
-import { View, Dimensions, Image } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
 import { bindActionCreators } from 'redux';
-import CustomIcon from '../config/CustomIcon';
 import * as MapActions from '../redux/actions';
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
-const LATITUDE_DELTA = 0.0022;
+const LATITUDE_DELTA = 0.0062;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 class Map extends React.Component {
@@ -17,10 +16,6 @@ class Map extends React.Component {
     this._mapRef = null;
     this.state = {
       currentPosition: {
-        latitude: 0,
-        longitude: 0,
-      },
-      finalPosition: {
         latitude: 0,
         longitude: 0,
       },
@@ -54,27 +49,34 @@ class Map extends React.Component {
           animated: true,
         },
       );
-      const { routeCoordinates } = nextProps;
-      this.setState({
-        finalPosition: routeCoordinates[routeCoordinates.length - 1],
-      });
     }
   }
 
   _renderStartMarker = () => {
-    if (this.props.panelVisible) {
+    const { routeCoordinates, panelVisible } = this.props;
+    if (routeCoordinates.length > 0) {
+      if (panelVisible) {
+        return (
+          <MapView.Marker
+            coordinate={routeCoordinates[0]}
+            title="Start"
+            image={require('../../assets/start.png')}
+          />
+        );
+      }
       return (
         <MapView.Marker
-          coordinate={this.state.currentPosition}
-          title="Marker"
-          image={require('../../assets/start.png')}
+          coordinate={routeCoordinates[0]}
+          title="Start"
+          image={require('../../assets/pin.png')}
+          centerOffset={{ x: 0, y: -16 }}
         />
       );
     }
     return (
       <MapView.Marker
         coordinate={this.state.currentPosition}
-        title="Marker"
+        title="Start"
         image={require('../../assets/pin.png')}
         centerOffset={{ x: 0, y: -16 }}
       />
@@ -82,11 +84,12 @@ class Map extends React.Component {
   }
 
   _renderFinalMarker = () => {
-    if (this.props.panelVisible) {
+    const { routeCoordinates, panelVisible } = this.props;
+    if (panelVisible) {
       return (
         <MapView.Marker
-          coordinate={this.state.finalPosition}
-          title="Marker"
+          coordinate={routeCoordinates[routeCoordinates.length - 1]}
+          title="End"
           image={require('../../assets/end.png')}
         />
       );
@@ -97,8 +100,8 @@ class Map extends React.Component {
   render() {
     const { prevLatLng, routeCoordinates } = this.props;
     const region = {
-      latitude: prevLatLng.latitude === undefined ? 0 : prevLatLng.latitude,
-      longitude: prevLatLng.longitude === undefined ? 0 : prevLatLng.longitude,
+      latitude: prevLatLng.latitude === undefined ? this.state.currentPosition.latitude : prevLatLng.latitude,
+      longitude: prevLatLng.longitude === undefined ? this.state.currentPosition.longitude : prevLatLng.longitude,
       latitudeDelta: LATITUDE_DELTA,
       longitudeDelta: LONGITUDE_DELTA,
     };
@@ -114,7 +117,7 @@ class Map extends React.Component {
           {this._renderFinalMarker()}
           <MapView.Polyline
             coordinates={routeCoordinates}
-            strokeColor="#34495E"
+            strokeColor="#2C3E50"
             strokeWidth={4}
           />
         </MapView>

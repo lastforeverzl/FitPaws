@@ -64,7 +64,7 @@ class EditProfile extends React.Component {
     <TouchableOpacity
       onPress={this._pressCancel}
     >
-      <Text style={{ color: '#FFFFFF' }}>Cancel</Text>
+      <Text style={{ color: '#FFFFFF', fontSize: 16 }}>Cancel</Text>
     </TouchableOpacity>
   )
 
@@ -104,7 +104,7 @@ class EditProfile extends React.Component {
     <TouchableOpacity
       onPress={this._pressDone}
     >
-      <Text style={{ color: '#FFFFFF', fontWeight: 'bold' }}>Done</Text>
+      <Text style={{ color: '#FFFFFF', fontWeight: 'bold', fontSize: 16 }}>Done</Text>
     </TouchableOpacity>
   )
 

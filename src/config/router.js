@@ -1,5 +1,5 @@
 import React from 'react';
-import { TabNavigator, StackNavigator } from 'react-navigation';
+import { TabNavigator, StackNavigator, TabBarBottom } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import Profile from '../containers/Profile';
 import History from '../containers/History';
@@ -28,6 +28,7 @@ export const Tabs = TabNavigator({
   tabBarPosition: 'bottom',
   animationEnabled: true,
   swipeEnabled: true,
+  tabBarComponent: TabBarBottom,
   tabBarOptions: {
     labelStyle: {
       fontSize: 10,

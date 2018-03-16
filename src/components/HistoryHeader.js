@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   buttonBorder: {
     borderWidth: 0,
     height: 20,
-    width: 100,
+    width: 120,
   },
   infoContainer: {
     flexDirection: 'row',

@@ -109,7 +109,7 @@ class Record extends React.Component {
         </View>
         <View style={styles.buttonView}>
           <Button
-            raised
+            // raised
             title="START"
             rounded
             fontWeight="bold"
